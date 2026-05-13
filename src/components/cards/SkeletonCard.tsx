@@ -1,7 +1,14 @@
-const SkeletonCard = () => {
+const SkeletonCard = ({
+  type,
+}: {
+  type: "episode" | "character" | "location";
+}) => {
+  const aspectRatio =
+    (type === "character" && "aspect-[4/6]") ||
+    (type === "episode" && "aspect-video");
   return (
     <div className="w-full h-full">
-      <div className="skeleton h-full aspect-[4/6]"></div>
+      <div className={`skeleton h-full ${aspectRatio}`}></div>
     </div>
   );
 };

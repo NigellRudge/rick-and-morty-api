@@ -8,12 +8,14 @@ import { TMDBEpisode } from "@/src/types/tmdb/season";
 export default function Page({
   seasons,
   episodes,
+  backgroundImage,
 }: {
   seasons: SeasonShort[];
   episodes: TMDBEpisode[];
+  backgroundImage: string;
 }) {
   return (
-    <Layout>
+    <Layout backgroundImage={backgroundImage}>
       <EpisodesPage seasons={seasons} episodes={episodes} />
     </Layout>
   );
@@ -22,6 +24,12 @@ export default function Page({
 export const getServerSideProps: GetServerSideProps = async () => {
   const showInformation = await TMDBClient.getInfo();
   const firstSeason = await TMDBClient.getSeasonInfo(1);
+  let backgroundImage = showInformation?.backdrop_path;
+  const images = await TMDBClient.getImages();
+  if (Boolean(images.backdrops) && images.backdrops.length > 0) {
+    const index = Math.floor(Math.random() * images.backdrops.length);
+    backgroundImage = images.backdrops[index];
+  }
 
   if (!showInformation || !firstSeason) {
     return {
@@ -32,6 +40,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       seasons: showInformation.seasons,
       defaultEpisodes: firstSeason.episodes,
+      backgroundImage,
     },
   };
 };

@@ -53,23 +53,24 @@ const Grid = ({
       .fill(0)
       .map((_, i) => (
         <li key={i}>
-          <SkeletonCard />
+          <SkeletonCard type={type} />
         </li>
       ));
-
-  if (isLoading && items.length === 0) {
-    return (
-      <ul className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] overflow-y-auto no-scrollbar relative gap-3 cursor-pointer">
-        {renderSkeletons()}
-      </ul>
-    );
-  }
-
   const columnLayout =
     (type === "character" &&
       "grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(13rem,1fr))]") ||
     (type === "episode" &&
       "grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4");
+
+  if (isLoading && items.length === 0) {
+    return (
+      <ul
+        className={`grid ${columnLayout} overflow-y-auto no-scrollbar relative gap-3 cursor-pointer px-1 py-1 h-full`}
+      >
+        {renderSkeletons()}
+      </ul>
+    );
+  }
 
   return (
     <ul

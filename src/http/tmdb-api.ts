@@ -1,12 +1,14 @@
 import axios, { AxiosInstance } from "axios";
 import { DetailInfo } from "@/src/types/tmdb/types";
 import { TMDBSeasonInfo } from "@/src/types/tmdb/season";
+import { MediaResponse } from "@/src/types/tmdb/media";
 
 class TMDBAPI {
   private readonly externalId =
     process.env.NEXT_PUBLIC_RICK_AND_MORTY_EXTERNAL_ID;
   private readonly apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
   private readonly mediaUrl = process.env.NEXT_PUBLIC_TMDB_MEDIA_URL;
+  private readonly mediaUrlLarge = process.env.NEXT_PUBLIC_TMDB_MEDIA_URL_LARGE;
   private readonly axios: AxiosInstance;
 
   constructor() {
@@ -52,10 +54,14 @@ class TMDBAPI {
   private mapSeasonData = (season: TMDBSeasonInfo): TMDBSeasonInfo => {
     return {
       ...season,
-      poster_path: `${this.mediaUrl}/${season.poster_path}`,
+      poster_path: `${this.mediaUrl}${season.poster_path}`,
       episodes: season.episodes.map((episode) => ({
         ...episode,
-        still_path: `${this.mediaUrl}/${episode.still_path}`,
+        overview:
+          episode.overview?.length > 120
+            ? episode.overview?.slice(0, 120).concat("...")
+            : episode.overview,
+        still_path: `${this.mediaUrl}${episode.still_path}`,
       })),
     };
   };
@@ -63,14 +69,55 @@ class TMDBAPI {
   private mapDetailInformation = (detailInfo: DetailInfo): DetailInfo => {
     return {
       ...detailInfo,
-      poster_path: `${this.mediaUrl}/${detailInfo.poster_path}`,
-      backdrop_path: `${this.mediaUrl}/${detailInfo.backdrop_path}`,
+      poster_path: `${this.mediaUrl}${detailInfo.poster_path}`,
+      backdrop_path: `${this.mediaUrl}${detailInfo.backdrop_path}`,
       seasons: detailInfo.seasons.map((season) => ({
         ...season,
-        poster_path: `${this.mediaUrl}/${season.poster_path}`,
+        poster_path: `${this.mediaUrl}${season.poster_path}`,
       })),
     };
   };
+
+  private mapMedia = (
+    mediaResponse: MediaResponse,
+  ): {
+    backdrops: string[];
+    posters: string[];
+  } => {
+    return {
+      backdrops: mediaResponse.backdrops.map(
+        (backdrop) => `${this.mediaUrlLarge}${backdrop.file_path}`,
+      ),
+      posters: mediaResponse.posters.map(
+        (poster) => `${this.mediaUrlLarge}${poster.file_path}`,
+      ),
+    };
+  };
+
+  public async getImages(): Promise<{
+    backdrops: string[];
+    posters: string[];
+  }> {
+    try {
+      const response = await this.axios.get<MediaResponse>(
+        `/tv/${process.env.NEXT_PUBLIC_RICK_AND_MORTY_EXTERNAL_ID}/images`,
+        { params: { api_key: this.apiKey } },
+      );
+      if ((await response).status !== 200) {
+        return {
+          backdrops: [],
+          posters: [],
+        };
+      }
+      return this.mapMedia(response.data);
+    } catch (error) {
+      console.log(error);
+      return {
+        backdrops: [],
+        posters: [],
+      };
+    }
+  }
 }
 
 export const TMDBClient = new TMDBAPI();

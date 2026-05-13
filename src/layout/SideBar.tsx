@@ -7,15 +7,13 @@ import Logo from "@/src/components/Logo";
 const CloseMenuButton = () => {
   const { setIsSideNavOpen } = useNavigationState();
   return (
-    <div className="md:hidden block">
-      <button
-        onClick={() => setIsSideNavOpen(false)}
-        className=""
-        type="button"
-      >
-        <Icon iconName="close" size={24} className="" />
-      </button>
-    </div>
+    <button
+      onClick={() => setIsSideNavOpen(false)}
+      className="md:hidden absolute right-2 top-2 z-[5] cursor-pointer"
+      type="button"
+    >
+      <Icon iconName="close" size={24} className="" />
+    </button>
   );
 };
 
@@ -31,27 +29,34 @@ const NavigationLink = ({ link }: { link: NavigationLinkItem }) => {
 };
 
 const SideBar = () => {
-  const { isSideNavOpen, navigationLinks } = useNavigationState();
+  const { isSideNavOpen, setIsSideNavOpen, navigationLinks } =
+    useNavigationState();
 
   return (
     <>
       <aside
-        className={`transition-transform ease-in-out duration-300 z-30 lg:z-[1] lg:relative absolute flex flex-col lg:min-w-[300px] h-[100vh] border-r border-gray-700 lg:translate-x-0 ${isSideNavOpen ? "-translate-x-full" : "-translate-x-full"}`}
+        className={` bg-base-100 lg:bg-transparent h-[100vh]
+      transition-all duration-200
+      ease-in-out
+         z-30 lg:z-[5] ${isSideNavOpen ? "translate-x-0" : "-translate-x-full"} absolute lg:relative lg:translate-x-0 w-64 flex flex-col border-r border-gray-700`}
       >
-        <div className="flex flex-row">
+        <div className="flex flex-row relative">
+          <CloseMenuButton />
           <Logo />
         </div>
-        <div className="">
-          <nav className="">
-            {navigationLinks.map((link) => (
-              <NavigationLink key={link.label} link={link} />
-            ))}
-          </nav>
-        </div>
+
+        <nav className="">
+          {navigationLinks.map((link) => (
+            <NavigationLink key={link.label} link={link} />
+          ))}
+        </nav>
       </aside>
 
       {isSideNavOpen && (
-        <div className="bg-gray-800/60 z-20 md:hidden absolute inset-0"></div>
+        <div
+          onClick={() => setIsSideNavOpen(false)}
+          className="bg-gray-800/60 z-[10] lg:hidden absolute inset-0"
+        ></div>
       )}
     </>
   );

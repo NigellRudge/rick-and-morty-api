@@ -37,31 +37,35 @@ const Runtime = ({ runtime }: { runtime: number }) => (
 const ReleaseDate = ({ releaseDate }: { releaseDate: string }) => (
   <div className="flex flex-row items-center gap-1">
     <Icon iconName="calendar" size={16} className="text-gray-300" />
-    <span className="text-xs font-semibold text-gray-300">{releaseDate}</span>
+    <span className="text-xs font-semibold text-gray-300">
+      {new Date(releaseDate).toLocaleDateString()}
+    </span>
   </div>
 );
 
 const EpisodeCard = ({ episode }: { episode: TMDBEpisode }) => {
   return (
-    <div className="flex relative rounded-lg transform-gpu will-change-transform hover:z-10 hover:scale-[1.02] overflow-hidden group aspect-video border border-gray-700 hover:border-green-500 duration-200 ease-in-out transition-all">
-      <div className="w-full h-full">
+    <div className="animate-appear flex relative rounded-lg transform-gpu will-change-transform hover:z-10 hover:scale-[1.02] overflow-hidden group aspect-video border border-gray-500 hover:border-green-500 duration-200 ease-in-out transition-all">
+      <div className="w-full h-full relative">
         <Image
           src={episode.still_path}
           alt={episode.still_path}
           fill
+          sizes="(min-width: 768px) 20vw,(min-width: 1025px) 15vw, 40vw"
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="inset-0 z-[2] absolute bg-linear-to-b/oklch from-transparent to-gray-900">
+      <div className="inset-0 z-[2] absolute bg-linear-to-b/oklch from-transparent via-gray-800/40 to-gray-800/90">
         <div className="flex flex-col absolute left-0 right-0 bottom-0 p-2">
-          <h4 className="text-lg text-gray-100 font-semibold">
+          <h4 className="lg:text-lg text-gray-100 font-semibold">
             {episode.name}
           </h4>
-          <div className="flex flex-row">
+          <div className="flex flex-row gap-1">
             <Runtime runtime={episode.runtime} />
+            <ReleaseDate releaseDate={episode.air_date} />
           </div>
 
-          <p className="text-sm text-gray-100 font-medium mt-2">
+          <p className="hidden sm:block text-sm text-gray-100 font-medium mt-2">
             {episode.overview}
           </p>
         </div>
