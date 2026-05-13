@@ -1,5 +1,14 @@
+import useFetchCharacters from "@/src/hooks/useFetchCharacters";
+import Grid from "@/src/components/Grid";
+
 const CharactersPage = () => {
-  return <div></div>;
+  const { isLoading, results } = useFetchCharacters();
+
+  return (
+    <div>
+      <Grid items={results} type="character" isLoading={isLoading} />
+    </div>
+  );
 };
 
 export default CharactersPage;
