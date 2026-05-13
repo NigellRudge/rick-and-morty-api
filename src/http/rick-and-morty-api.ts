@@ -4,7 +4,7 @@ import { Episode } from "@/src/types/episode";
 import { Location } from "@/src/types/location";
 import BaseClient from "@/src/http/base-client";
 
-export class RickAndMortyApi extends BaseClient {
+class RickAndMortyApi extends BaseClient {
   constructor() {
     super(process.env.NEXT_PUBLIC_RICK_AND_MORTY_API_URL || "");
   }
@@ -18,3 +18,5 @@ export class RickAndMortyApi extends BaseClient {
   public getLocations = async (filters?: any) =>
     await this.get<RMResponse<Location>>("/location");
 }
+
+export const rickAndMortyClient = new RickAndMortyApi();
