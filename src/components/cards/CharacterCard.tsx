@@ -7,7 +7,8 @@ import { Status } from "@/src/components/cards/shared";
 const CharacterCard = ({ character }: { character: Character }) => {
   const { setSelectedCharacter, selectedCharacter } = useNavigationState();
   return (
-    <motion.div
+    <motion.button
+      tabIndex={0}
       layoutId={`selected-${character!.id}`}
       onClick={() => setSelectedCharacter(character)}
       animate={{ opacity: selectedCharacter?.id === character.id ? 0 : 1 }}
@@ -24,7 +25,7 @@ const CharacterCard = ({ character }: { character: Character }) => {
         <div className="absolute z-[1] inset-0  bg-gradient-to-t from-gray-900/90 via-gray-800/70 to-transparent" />
       </div>
       <div className="w-full ease-in-out duration-200 z-[2] mt-auto p-3">
-        <div className="flex flex-col gap-0">
+        <div className="flex flex-col gap-0 items-start">
           <h4 className="text-base md:text-lg group-hover:text-gray-100 transition-colors ease-in-out duration-200 text-gray-400 font-semibold">
             {character.name}
           </h4>
@@ -37,7 +38,7 @@ const CharacterCard = ({ character }: { character: Character }) => {
         </div>
       </div>
       <Status status={character.status} />
-    </motion.div>
+    </motion.button>
   );
 };
 
