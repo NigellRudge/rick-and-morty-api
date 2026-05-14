@@ -9,10 +9,10 @@ import CharacterDetailModal from "@/src/layout/CharacterDetailModal";
 
 const Layout = ({
   children,
-  backgroundImage,
+  showNavigationOverContent = false,
 }: {
   children: ReactNode;
-  backgroundImage?: string;
+  showNavigationOverContent?: boolean;
 }) => {
   const { ref, hasScrolled } = useHasElementScrolled({ scrollOffset: 48 });
   return (
@@ -20,14 +20,20 @@ const Layout = ({
       <Head>
         <title>{name}</title>
       </Head>
-      <div className="flex h-screen max-w-full overflow-hidden no-scrollbar bg-gradient-to-r from-slate-800 to-green-900 ">
+      <div className="flex flex-col h-screen max-w-full overflow-hidden no-scrollbar bg-gradient-to-r from-slate-800 to-green-900 ">
+        <Header
+          showNavigationOverContent={showNavigationOverContent}
+          parentRef={ref}
+          hasScrolled={hasScrolled}
+        />
         <SideBar />
 
         <main
           ref={ref}
-          className="flex flex-col overflow-y-scroll flex-1 relative px-6 py-4 no-scrollbar"
+          className={`
+            flex flex-col overflow-y-scroll flex-1 relative ${showNavigationOverContent ? "lg:p-2 p-0" : "px-6 py-4 "} no-scrollbar
+          `}
         >
-          <Header parentRef={ref} hasScrolled={hasScrolled} />
           <LayoutGroup>
             {children}
             <CharacterDetailModal />

@@ -5,7 +5,7 @@ const CharactersPage = () => {
   const { isLoading, results } = useFetchCharacters();
 
   return (
-    <div className="flex flex-col  pt-8 lg:pt-12">
+    <div className="flex flex-col ">
       <Grid items={results} type="character" isLoading={isLoading} />
     </div>
   );

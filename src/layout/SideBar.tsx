@@ -38,7 +38,7 @@ const SideBar = () => {
         className={` bg-base-100 lg:bg-transparent h-[100vh]
       transition-all duration-200
       ease-in-out
-         z-30 lg:z-[5] ${isSideNavOpen ? "translate-x-0" : "-translate-x-full"} absolute lg:relative lg:translate-x-0 w-64 flex flex-col border-r border-gray-700`}
+         z-30 ${isSideNavOpen ? "translate-x-0" : "-translate-x-full"} absolute w-64 flex flex-col border-r border-gray-700`}
       >
         <div className="flex flex-row relative">
           <CloseMenuButton />
@@ -46,9 +46,13 @@ const SideBar = () => {
         </div>
 
         <nav className="">
-          {navigationLinks.map((link) => (
-            <NavigationLink key={link.label} link={link} />
-          ))}
+          <ul>
+            {navigationLinks.map((link) => (
+              <li key={link.label}>
+                <NavigationLink link={link} />
+              </li>
+            ))}
+          </ul>
         </nav>
       </aside>
 

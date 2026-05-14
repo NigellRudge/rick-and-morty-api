@@ -3,10 +3,12 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
+  useEffect,
   useState,
 } from "react";
 import { IconName } from "@/src/components/Icon";
 import { Character } from "@/src/types/character";
+import { useRouter } from "next/router";
 
 export type NavigationLinkItem = {
   url: string;
@@ -37,10 +39,15 @@ const navigationLinks: NavigationLinkItem[] = [
 ];
 
 const NavigationStateProvider = ({ children }: { children: ReactNode }) => {
+  const router = useRouter();
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null,
   );
+
+  useEffect(() => {
+    isSideNavOpen && setIsSideNavOpen(false);
+  }, [router.asPath]);
 
   return (
     <NavigationStateContext.Provider

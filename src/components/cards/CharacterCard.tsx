@@ -12,7 +12,7 @@ const CharacterCard = ({ character }: { character: Character }) => {
       layoutId={`selected-${character!.id}`}
       onClick={() => setSelectedCharacter(character)}
       animate={{ opacity: selectedCharacter?.id === character.id ? 0 : 1 }}
-      className="flex group relative w-full transform-gpu will-change-transform rounded-xl hover:z-10 border transition-all border-gray-700 shadow-xs overflow-hidden aspect-[4/6] hover:border-green-500 duration-200 ease-in-out"
+      className=" cursor-pointer flex group relative w-full transform-gpu will-change-transform rounded-xl hover:z-10 border transition-all border-gray-700 shadow-xs overflow-hidden aspect-[4/6] hover:border-green-500 duration-200 ease-in-out"
     >
       <div className="w-full overflow-hidden absolute inset-0 z-0">
         <Image

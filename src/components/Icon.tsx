@@ -5,6 +5,7 @@ import {
   HiStar,
   HiOutlineClock,
   HiOutlineCalendar,
+  HiOutlineClipboardList,
 } from "react-icons/hi";
 
 export type IconName =
@@ -13,6 +14,7 @@ export type IconName =
   | "close"
   | "star"
   | "clock"
+  | "clipboard"
   | "calendar";
 
 const Icon = ({
@@ -37,6 +39,8 @@ const Icon = ({
       return <HiOutlineClock className={className} size={size} />;
     case "calendar":
       return <HiOutlineCalendar className={className} size={size} />;
+    case "clipboard":
+      return <HiOutlineClipboardList className={className} size={size} />;
     default:
       return null;
   }
