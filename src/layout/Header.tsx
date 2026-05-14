@@ -2,6 +2,8 @@ import Icon from "@/src/components/Icon";
 import useNavigationState from "@/src/hooks/useNavigationState";
 import SearchBar from "@/src/layout/SearchBar";
 import useIsHovering from "@/src/hooks/useIsHovering";
+import Headroom from "react-headroom";
+import { useEffect } from "react";
 
 const MenuButton = () => {
   const { setIsSideNavOpen } = useNavigationState();
@@ -15,20 +17,32 @@ const MenuButton = () => {
   );
 };
 
-const Header = ({ hasScrolled }: { hasScrolled: boolean }) => {
+const Header = ({
+  hasScrolled,
+  parentRef,
+}: {
+  hasScrolled: boolean;
+  parentRef?: any;
+}) => {
   const { elementRef, isHovering } = useIsHovering();
-  const isTransparent = !isHovering || hasScrolled;
 
   return (
-    <div
-      ref={elementRef}
-      className={`absolute inset-0 flex h-16 z-[3] ${hasScrolled ? "bg-base-100" : "bg-transparent"} transition-opacity ease-in-out duration-300 ${isTransparent ? " opacity-70" : "opacity-100"}`}
+    <Headroom
+      disable={!parentRef?.current}
+      parent={() => parentRef.current}
+      onPin={() => console.log("pinned")}
+      onUnpin={() => console.log("unpinned")}
     >
-      <div className="flex flex-row flex-1 items-center gap-2 py-2 px-6">
-        <MenuButton />
-        <SearchBar />
+      <div
+        ref={elementRef}
+        className={` transition-opacity ease-in-out duration-300`}
+      >
+        <div className="flex flex-row flex-1 items-center gap-2">
+          <MenuButton />
+          <SearchBar />
+        </div>
       </div>
-    </div>
+    </Headroom>
   );
 };
 

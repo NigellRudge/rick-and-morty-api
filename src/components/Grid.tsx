@@ -58,7 +58,7 @@ const Grid = ({
       ));
   const columnLayout =
     (type === "character" &&
-      "grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(13rem,1fr))]") ||
+      "grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(14rem,1fr))]") ||
     (type === "episode" &&
       "grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4");
 

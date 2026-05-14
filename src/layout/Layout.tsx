@@ -18,17 +18,16 @@ const Layout = ({
       <Head>
         <title>{name}</title>
       </Head>
-      <div className="flex h-screen max-w-full overflow-hidden bg-gradient-to-r from-slate-800 to-green-900 ">
+      <div className="flex h-screen max-w-full overflow-hidden no-scrollbar bg-gradient-to-r from-slate-800 to-green-900 ">
         <SideBar />
-        <div className="flex flex-col overflow-hidden relative flex-1 pt-8 ">
-          <Header hasScrolled={hasScrolled} />
-          <main
-            ref={ref}
-            className="flex flex-col overflow-y-scroll flex-1 relative px-6 py-4 no-scrollbar"
-          >
-            {children}
-          </main>
-        </div>
+
+        <main
+          ref={ref}
+          className="flex flex-col overflow-y-scroll flex-1 relative px-6 py-4 no-scrollbar"
+        >
+          <Header parentRef={ref} hasScrolled={hasScrolled} />
+          {children}
+        </main>
       </div>
     </>
   );

@@ -51,8 +51,8 @@ const EpisodesPage = ({
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col items-center lg:items-start lg:flex-row gap-2 pt-8 lg:pt-12">
+    <div className="flex flex-col gap-4  pt-8 lg:pt-12">
+      <div className="flex flex-col items-center lg:items-start lg:flex-row gap-2">
         <div className="flex min-w-48 aspect-[4/6] overflow-hidden rounded-lg relative">
           <Image
             src={selectedSeason.poster_path}

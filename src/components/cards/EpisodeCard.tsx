@@ -45,7 +45,7 @@ const ReleaseDate = ({ releaseDate }: { releaseDate: string }) => (
 
 const EpisodeCard = ({ episode }: { episode: TMDBEpisode }) => {
   return (
-    <div className="animate-appear flex relative rounded-lg transform-gpu will-change-transform hover:z-10 hover:scale-[1.02] overflow-hidden group aspect-video border border-gray-500 hover:border-green-500 duration-200 ease-in-out transition-all">
+    <div className="animate-appear flex relative rounded-lg transform-gpu will-change-transform hover:z-10 hover:scale-[1.02] overflow-hidden group aspect-[6/4] border border-gray-500 hover:border-green-500 duration-200 ease-in-out transition-all">
       <div className="w-full h-full relative">
         <Image
           src={episode.still_path}
@@ -55,7 +55,7 @@ const EpisodeCard = ({ episode }: { episode: TMDBEpisode }) => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="inset-0 z-[2] absolute bg-linear-to-b/oklch from-transparent via-gray-800/40 to-gray-800/90">
+      <div className="inset-0 z-[2] absolute  bg-gradient-to-t from-black via-black/40 to-transparent">
         <div className="flex flex-col absolute left-0 right-0 bottom-0 p-2">
           <h4 className="lg:text-lg text-gray-100 font-semibold">
             {episode.name}
