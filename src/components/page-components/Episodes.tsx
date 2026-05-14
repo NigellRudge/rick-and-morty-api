@@ -5,6 +5,27 @@ import { TMDBEpisode } from "@/src/types/tmdb/season";
 import Image from "next/image";
 import { useState } from "react";
 
+const SeasonInfo = ({ season }: { season: SeasonShort }) => (
+  <div className="flex flex-col items-center lg:items-start lg:flex-row gap-2">
+    <div className="flex min-w-48 aspect-[4/6] overflow-hidden rounded-lg relative">
+      <Image
+        src={season.poster_path}
+        alt={season.name}
+        fill
+        className="w-full h-full object-cover"
+      />
+    </div>
+    <div className="flex flex-col px-0 lg:px-4 items-center lg:items-start">
+      <h2 className="font-semibold text-3xl">{season.name}</h2>
+      <div className="flex flex-col gap-2">
+        <span className="text-md lg:text-start text-center">
+          {season.overview}
+        </span>
+      </div>
+    </div>
+  </div>
+);
+
 const SeasonSwitcher = ({
   seasons,
   setSeason,
@@ -17,7 +38,7 @@ const SeasonSwitcher = ({
       <legend className="fieldset-legend">Available Seasons</legend>
       <select
         defaultValue="1"
-        className="select w-full"
+        className="select w-full outline-none"
         onChange={(event) => {
           const { value } = event.target;
           const selected = seasons.find(
@@ -52,24 +73,7 @@ const EpisodesPage = ({
 
   return (
     <div className="flex flex-col gap-4  pt-8 lg:pt-12">
-      <div className="flex flex-col items-center lg:items-start lg:flex-row gap-2">
-        <div className="flex min-w-48 aspect-[4/6] overflow-hidden rounded-lg relative">
-          <Image
-            src={selectedSeason.poster_path}
-            alt={selectedSeason.name}
-            fill
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="flex flex-col px-0 lg:px-4 items-center lg:items-start">
-          <h2 className="font-semibold text-3xl">{selectedSeason.name}</h2>
-          <div className="flex flex-col gap-2">
-            <span className="text-md lg:text-start text-center">
-              {selectedSeason.overview}
-            </span>
-          </div>
-        </div>
-      </div>
+      <SeasonInfo season={selectedSeason} />
       <SeasonSwitcher
         seasons={seasons}
         setSeason={(season) => setSelectedSeason(season)}

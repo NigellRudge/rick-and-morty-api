@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import NavigationStateProvider from "@/src/providers/NavigationStateProvider";
-
 import { Inter } from "next/font/google";
 
 const carterFont = Inter({

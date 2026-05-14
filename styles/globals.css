@@ -66,5 +66,5 @@ body {
 }
 
 .headroom--pinned {
-  @apply bg-base-100/70 p-4
+  @apply bg-base-100/70 px-6 py-4
 }

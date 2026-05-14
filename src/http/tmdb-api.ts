@@ -61,7 +61,9 @@ class TMDBAPI {
           episode.overview?.length > 120
             ? episode.overview?.slice(0, 120).concat("...")
             : episode.overview,
-        still_path: `${this.mediaUrl}${episode.still_path}`,
+        still_path: Boolean(episode.still_path)
+          ? `${this.mediaUrl}${episode.still_path}`
+          : "/imgs/fallback.webp",
       })),
     };
   };
