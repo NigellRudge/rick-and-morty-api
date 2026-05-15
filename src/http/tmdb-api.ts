@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { DetailInfo } from "@/src/types/tmdb/types";
 import { TMDBSeasonInfo } from "@/src/types/tmdb/season";
-import { MediaResponse } from "@/src/types/tmdb/media";
+import { MediaResponse, Video, VideoResponse } from "@/src/types/tmdb/media";
 
 class TMDBAPI {
   private readonly externalId =
@@ -41,7 +41,7 @@ class TMDBAPI {
         `/tv/${process.env.NEXT_PUBLIC_RICK_AND_MORTY_EXTERNAL_ID}/season/${seasonNumber}`,
         { params: { api_key: this.apiKey } },
       );
-      if ((await response).status !== 200) {
+      if (response.status !== 200) {
         return null;
       }
       return this.mapSeasonData(response.data);
@@ -51,9 +51,28 @@ class TMDBAPI {
     }
   }
 
-  private mapSeasonData = (season: TMDBSeasonInfo): TMDBSeasonInfo => {
+  public async getSeasonVideos(seasonNumber: number): Promise<Video[] | null> {
+    try {
+      const response = await this.axios.get<VideoResponse>(
+        `/tv/${process.env.NEXT_PUBLIC_RICK_AND_MORTY_EXTERNAL_ID}/season/${seasonNumber}/videos`,
+        { params: { api_key: this.apiKey } },
+      );
+      if (response.status !== 200) {
+        return null;
+      }
+      return response.data.results;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  private mapSeasonData = async (
+    season: TMDBSeasonInfo,
+  ): Promise<TMDBSeasonInfo> => {
     return {
       ...season,
+      videos: await this.getSeasonVideos(season.season_number),
       poster_path: `${this.mediaUrl}${season.poster_path}`,
       episodes: season.episodes.map((episode) => ({
         ...episode,

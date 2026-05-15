@@ -9,7 +9,7 @@ const CloseMenuButton = () => {
   return (
     <button
       onClick={() => setIsSideNavOpen(false)}
-      className="md:hidden absolute right-2 top-2 z-[5] cursor-pointer"
+      className="md:hidden absolute right-2 top-[16px] z-[5] cursor-pointer"
       type="button"
     >
       <Icon iconName="close" size={24} className="" />
@@ -35,12 +35,12 @@ const SideBar = () => {
   return (
     <>
       <aside
-        className={` bg-base-100 lg:bg-transparent h-[100vh]
+        className={` bg-base-100/80 lg:bg-transparent h-[100vh]
       transition-all duration-200
       ease-in-out
-         z-30 ${isSideNavOpen ? "translate-x-0" : "-translate-x-full"} absolute w-64 flex flex-col border-r border-gray-700`}
+         z-30 ${isSideNavOpen ? "translate-x-0" : "-translate-x-full"} absolute left w-64 flex flex-col border-r border-gray-700`}
       >
-        <div className="flex flex-row relative">
+        <div className="flex flex-row relative px-3 py-2">
           <CloseMenuButton />
           <Logo />
         </div>

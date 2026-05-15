@@ -3,24 +3,9 @@ import useNavigationState from "@/src/hooks/useNavigationState";
 import Icon from "@/src/components/Icon";
 import { Status } from "@/src/components/cards/shared";
 import Image from "next/image";
-import { useEffect } from "react";
 
 const CharacterDetailModal = () => {
   const { selectedCharacter, setSelectedCharacter } = useNavigationState();
-
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setSelectedCharacter(null);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyPress);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
-  }, []);
 
   return (
     <AnimatePresence>
@@ -34,7 +19,7 @@ const CharacterDetailModal = () => {
             animate={{ opacity: 1 }}
           ></motion.div>
           <motion.div
-            className="fixed inset-0 m-auto md:max-w-[450px] max-w-[70vw] aspect-[4/6] z-50 rounded-xl border-gray-100 border overflow-hidden "
+            className="fixed inset-0 m-auto md:max-w-[350px] max-w-[70vw] aspect-[4/6] z-50 rounded-xl border-gray-100 border overflow-hidden "
             layoutId={`selected-${selectedCharacter!.id}`}
           >
             <button
@@ -53,17 +38,30 @@ const CharacterDetailModal = () => {
                   className="object-cover w-full h-full"
                 />
               </div>
-              <div className="w-full ease-in-out duration-200 z-[2] mt-auto p-3 h-1/5 bg-gray-700">
-                <div className="flex flex-col gap-0 items-start">
-                  <h4 className="text-base md:text-lg  text-gray-50 font-semibold">
-                    {selectedCharacter!.name}
-                  </h4>
-                  <span className="text-xs font-medium text-gray-100">
-                    {selectedCharacter!.species} {selectedCharacter!.gender}
-                  </span>
-                  <span className="text-xs font-medium text-gray-500">
-                    {selectedCharacter!.origin.name}
-                  </span>
+              <div className="w-full ease-in-out duration-200 z-[2] mt-auto p-3 min-h-1/5 bg-gray-700/80 border-gray-700">
+                <div className="flex flex-col gap-2 items-start">
+                  <div className="flex flex-col font-medium gap-0">
+                    <span className="text-base md:text-lg  text-gray-50 font-semibold ">
+                      {selectedCharacter!.name}
+                    </span>
+                    <span className="text-xs text-gray-200">
+                      {selectedCharacter!.species} {selectedCharacter!.gender}
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm font-medium text-gray-200">
+                      {selectedCharacter!.origin.name}
+                    </span>
+
+                    <div className="flex flex-col font-medium mt-4">
+                      <span className="text-xs text-gray-400 capitalize">
+                        Last Known Location
+                      </span>
+                      <span className="text-xs text-gray-200 ">
+                        {selectedCharacter!.location.name}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <Status status={selectedCharacter!.status} />

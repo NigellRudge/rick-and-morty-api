@@ -9,7 +9,9 @@ The following technologies were used:
 - [The Rick And morty Api](https://rickandmortyapi.com/)
 - [The Movie Database Api](https://www.themoviedb.org/)
 
+#### To start the application use the following commands:
+
 ```bash
-pnpm dev
+pnpm build && pnpm start
 
 ```

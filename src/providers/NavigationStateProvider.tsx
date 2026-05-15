@@ -32,9 +32,8 @@ export const NavigationStateContext = createContext<NavigationStateType>({
 });
 
 const navigationLinks: NavigationLinkItem[] = [
-  { url: "/", label: "Characters" },
-  { url: "/discover", label: "Discover" },
-  { url: "/episodes", label: "Episode" },
+  { url: "/", label: "Episodes" },
+  { url: "/characters", label: "Characters" },
   { url: "/locations", label: "Locations" },
 ];
 
@@ -44,6 +43,21 @@ const NavigationStateProvider = ({ children }: { children: ReactNode }) => {
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null,
   );
+
+  const handleKeyPress = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      setSelectedCharacter(null);
+      setIsSideNavOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
 
   useEffect(() => {
     isSideNavOpen && setIsSideNavOpen(false);

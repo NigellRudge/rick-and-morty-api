@@ -12,7 +12,7 @@ export default class BaseClient {
     params?: Record<string, any>,
   ): Promise<T | null> {
     try {
-      const response = await this.axiosClient.get<T>(url, params);
+      const response = await this.axiosClient.get<T>(url, { params });
       if (response.status !== 200) {
         return null;
       }

@@ -1,8 +1,6 @@
 import Icon from "@/src/components/Icon";
 import useNavigationState from "@/src/hooks/useNavigationState";
 import SearchBar from "@/src/layout/SearchBar";
-import useIsHovering from "@/src/hooks/useIsHovering";
-import Headroom from "react-headroom";
 import Logo from "@/src/components/Logo";
 import { NavigationLinkItem } from "@/src/providers/NavigationStateProvider";
 import Link from "next/link";
@@ -39,7 +37,7 @@ const NavigationLink = ({
         className="group cursor-pointer focus:outline-primary "
       >
         <div
-          className={`flex flex-row w-full transition-colors ease-in-out duration-200 items-center px-4 py-2 ${isActive ? activeColor : "bg-transparent group-hover:bg-emerald-800/70"}`}
+          className={`flex flex-row w-full transition-colors rounded-md ease-in-out duration-200 items-center px-4 py-2 ${isActive ? activeColor : "bg-transparent group-hover:bg-emerald-800/70"}`}
         >
           {Boolean(link.iconName) && <Icon iconName={link.iconName!} />}
           <span className="group-hover:text-white group-hover:font-bold transition-all ease-in-out duration-200">
@@ -60,7 +58,7 @@ const MenuLinks = ({
   const { navigationLinks } = useNavigationState();
   return (
     <nav className="w-fit lg:block hidden ">
-      <ul className="flex-row flex items-center">
+      <ul className="flex-row flex items-center gap-1">
         {navigationLinks.map((link) => (
           <NavigationLink
             showNavigationOverContent={showNavigationOverContent}
@@ -75,38 +73,27 @@ const MenuLinks = ({
 };
 
 const Header = ({
-  hasScrolled,
-  parentRef,
   showNavigationOverContent = false,
 }: {
-  hasScrolled: boolean;
-  parentRef?: any;
   showNavigationOverContent?: boolean;
 }) => {
-  const { elementRef, isHovering } = useIsHovering();
-
   return (
-    <Headroom
-      disable={!parentRef?.current || showNavigationOverContent}
-      parent={() => parentRef.current}
-      onPin={() => console.log("pinned")}
-      onUnpin={() => console.log("unpinned")}
-      className={
-        showNavigationOverContent ? "absolute inset-3 z-10" : "relative"
-      }
+    <div
+      className={` flex  w-full items-center justify-center ${showNavigationOverContent ? "absolute  inset-x-0  z-10" : "relative"}`}
     >
       <div
-        ref={elementRef}
-        className={` transition-opacity ease-in-out duration-300 h-[70px] flex items-center px-8  `}
+        className={` transition-opacity ease-in-out duration-300 h-[70px] flex items-center w-[calc(min(100vw,1600px)-32px)] `}
       >
         <div className="flex flex-row flex-1 gap-2 items-center justify-between">
-          <Logo />
+          <div className="hidden lg:block">
+            <Logo />
+          </div>
           <SearchBar showNavigationOverContent={showNavigationOverContent} />
           <MenuLinks showNavigationOverContent={showNavigationOverContent} />
           <MenuButton />
         </div>
       </div>
-    </Headroom>
+    </div>
   );
 };
 

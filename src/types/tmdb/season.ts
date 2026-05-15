@@ -1,3 +1,5 @@
+import { Video } from "@/src/types/tmdb/media";
+
 export interface TMDBSeasonInfo {
   _id: string;
   air_date: string;
@@ -9,6 +11,7 @@ export interface TMDBSeasonInfo {
   poster_path: string;
   season_number: number;
   vote_average: number;
+  videos?: Video[];
 }
 
 export interface TMDBEpisode {

@@ -7,14 +7,17 @@ import {
   HiOutlineCalendar,
   HiOutlineClipboardList,
 } from "react-icons/hi";
-
+import { FaGithub } from "react-icons/fa6";
+import { AiTwotoneApi } from "react-icons/ai";
 export type IconName =
   | "menu"
   | "search"
   | "close"
   | "star"
   | "clock"
+  | "github"
   | "clipboard"
+  | "api"
   | "calendar";
 
 const Icon = ({
@@ -41,6 +44,10 @@ const Icon = ({
       return <HiOutlineCalendar className={className} size={size} />;
     case "clipboard":
       return <HiOutlineClipboardList className={className} size={size} />;
+    case "github":
+      return <FaGithub className={className} size={size} />;
+    case "api":
+      return <AiTwotoneApi className={className} size={size} />;
     default:
       return null;
   }

@@ -19,7 +19,7 @@ const DiscoverPage = ({
   const carouselItems = showPosters ? posters : backdrops;
 
   return (
-    <div className="">
+    <div className="w-full overflow-x-hidden">
       <Carousel items={carouselItems} newSeason={newSeason} />
     </div>
   );

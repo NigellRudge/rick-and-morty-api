@@ -3,9 +3,12 @@ import Head from "next/head";
 import { name } from "../../package.json";
 import SideBar from "@/src/layout/SideBar";
 import Header from "@/src/layout/Header";
-import useHasElementScrolled from "@/src/hooks/useHasElementScrolled";
 import { LayoutGroup } from "framer-motion";
 import CharacterDetailModal from "@/src/layout/CharacterDetailModal";
+import Link from "next/link";
+import Image from "next/image";
+import Icon from "@/src/components/Icon";
+import Footer from "@/src/layout/Footer";
 
 const Layout = ({
   children,
@@ -14,24 +17,21 @@ const Layout = ({
   children: ReactNode;
   showNavigationOverContent?: boolean;
 }) => {
-  const { ref, hasScrolled } = useHasElementScrolled({ scrollOffset: 48 });
   return (
     <>
       <Head>
         <title>{name}</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#1f2937" />
       </Head>
-      <div className="flex flex-col h-screen max-w-full overflow-hidden no-scrollbar bg-gradient-to-r from-slate-800 to-green-900 ">
-        <Header
-          showNavigationOverContent={showNavigationOverContent}
-          parentRef={ref}
-          hasScrolled={hasScrolled}
-        />
+      <div className="flex flex-col h-screen max-w-full overflow-y-scroll no-scrollbar bg-gradient-to-r from-slate-800 to-green-900 ">
+        <Header showNavigationOverContent={showNavigationOverContent} />
         <SideBar />
 
         <main
-          ref={ref}
           className={`
-            flex flex-col overflow-y-scroll flex-1 relative ${showNavigationOverContent ? "lg:p-2 p-0" : "px-6 py-4 "} no-scrollbar
+            items-center flex flex-col flex-1 relative ${showNavigationOverContent ? "lg:p-2 p-0" : "px-6 py-4 "} no-scrollbar
           `}
         >
           <LayoutGroup>
@@ -39,6 +39,7 @@ const Layout = ({
             <CharacterDetailModal />
           </LayoutGroup>
         </main>
+        <Footer />
       </div>
     </>
   );

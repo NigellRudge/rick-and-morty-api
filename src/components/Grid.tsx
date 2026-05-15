@@ -3,8 +3,8 @@ import { Location } from "@/src/types/location";
 import CharacterCard from "@/src/components/cards/CharacterCard";
 import EpisodeCard from "@/src/components/cards/EpisodeCard";
 import LocationCard from "@/src/components/cards/LocationCard";
-import SkeletonCard from "@/src/components/cards/SkeletonCard";
 import { TMDBEpisode } from "@/src/types/tmdb/season";
+import LoadingAnimation from "@/src/components/LoadingAnimation";
 
 const GridItem = ({
   item,
@@ -41,21 +41,12 @@ const Grid = ({
   items,
   type = "character",
   isLoading = false,
-  loadMore,
 }: {
   items: Character[] | Location[] | TMDBEpisode[];
   type: "episode" | "location" | "character";
   isLoading?: boolean;
   loadMore?: () => Promise<void>;
 }) => {
-  const renderSkeletons = () =>
-    Array(50)
-      .fill(0)
-      .map((_, i) => (
-        <li key={i}>
-          <SkeletonCard type={type} />
-        </li>
-      ));
   const columnLayout =
     (type === "character" &&
       "grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(14rem,1fr))]") ||
@@ -63,13 +54,7 @@ const Grid = ({
       "grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4");
 
   if (isLoading && items.length === 0) {
-    return (
-      <ul
-        className={`grid ${columnLayout} overflow-y-auto no-scrollbar relative gap-3 cursor-pointer px-1 py-1 h-full`}
-      >
-        {renderSkeletons()}
-      </ul>
-    );
+    return <LoadingAnimation />;
   }
 
   return (

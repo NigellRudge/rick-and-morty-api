@@ -55,7 +55,7 @@ const EpisodeCard = ({ episode }: { episode: TMDBEpisode }) => {
           src={episode.still_path}
           alt={episode.still_path}
           fill
-          sizes="(min-width: 768px) 350px,(min-width: 1025px) 350px, 100vw"
+          sizes="(min-width: 0px) 180vw,(min-width: 1025px) 400px,(min-width: 1400px) 550px"
           className="w-full h-full object-cover"
         />
       </div>
