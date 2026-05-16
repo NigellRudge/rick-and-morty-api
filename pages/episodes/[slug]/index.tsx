@@ -6,7 +6,6 @@ import { parseEpisodeCode } from "@/src/utils/episode";
 import { rickAndMortyClient } from "@/src/http/rick-and-morty-api";
 import { Character } from "@/src/types/character";
 import { EpisodeInfo } from "@/src/types/episode";
-import { TMDBSeasonInfo } from "@/src/types/tmdb/season";
 
 export default function Page({
   episode,

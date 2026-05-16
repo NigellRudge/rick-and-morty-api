@@ -35,7 +35,7 @@ const Grid = ({
   type = "character",
   isLoading = false,
 }: {
-  items: Character[] | Location[] | TMDBEpisode[];
+  items?: Character[] | Location[] | TMDBEpisode[] | null;
   type: "episode" | "location" | "character";
   isLoading?: boolean;
   loadMore?: () => Promise<void>;
@@ -46,7 +46,11 @@ const Grid = ({
     (type === "episode" &&
       "grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4");
 
-  if (isLoading && items.length === 0) {
+  if (!isLoading && !items) {
+    return null;
+  }
+
+  if (isLoading && (!items || items?.length === 0)) {
     return <LoadingAnimation />;
   }
 
@@ -54,10 +58,9 @@ const Grid = ({
     <ul
       className={`grid ${columnLayout} overflow-y-auto no-scrollbar relative gap-3 cursor-pointer px-1 py-1 h-full`}
     >
-      {items?.length > 0 &&
-        items?.map((item) => (
-          <GridItem key={item.id} item={item} type={type} />
-        ))}
+      {items?.map((item) => (
+        <GridItem key={item.id} item={item} type={type} />
+      ))}
     </ul>
   );
 };

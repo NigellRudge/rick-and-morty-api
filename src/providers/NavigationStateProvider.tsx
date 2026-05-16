@@ -60,7 +60,7 @@ const NavigationStateProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    isSideNavOpen && setIsSideNavOpen(false);
+    setIsSideNavOpen(false);
   }, [router.asPath]);
 
   return (

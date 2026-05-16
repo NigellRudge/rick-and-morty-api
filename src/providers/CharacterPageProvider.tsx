@@ -25,14 +25,14 @@ export const availableFilters: Partial<FilterType> = {
 type ContextType = {
   isLoading: boolean;
   results: Character[];
-  setSelectedLocation: (data?: any) => void;
+  setSelectedLocation: (data?: Location[]) => void;
   clearFilters: () => void;
   filters: FilterType;
   fetchMore?: (page?: number) => void;
   fetchLocations?: DebouncedFunc<
     (
       input: string,
-      callBack: (input: any[]) => void,
+      callBack: (input: Location[]) => void,
     ) => Promise<never[] | undefined>
   >;
   updateActiveFiltersForKey: <K extends keyof FilterType>(
@@ -108,20 +108,22 @@ const CharacterPageProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const fetchLocations = useMemo(() => {
-    return debounce(async (input: string, callBack: (input: any[]) => void) => {
-      try {
-        if (!input) return;
-        const response = await rickAndMortyClient.getLocations(input);
-        if (response) {
-          callBack(response.results || []);
-          return;
+    return debounce(
+      async (input: string, callBack: (input: Location[]) => void) => {
+        try {
+          if (!input) return;
+          const response = await rickAndMortyClient.getLocations(input);
+          if (response) {
+            callBack(response.results || []);
+            return;
+          }
+          return [];
+        } catch (error) {
+          console.log(error);
+          return [];
         }
-        return [];
-      } catch (error) {
-        console.log(error);
-        return [];
-      }
-    });
+      },
+    );
   }, []);
 
   const debouncedFetch = useMemo(
@@ -149,7 +151,7 @@ const CharacterPageProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const setSelectedLocation = useCallback(
-    async (locations: Location[]) => {
+    async (locations?: Location[]) => {
       if (!locations) return;
       const characterIds = locations
         .reduce((acc: string[], current: Location) => {

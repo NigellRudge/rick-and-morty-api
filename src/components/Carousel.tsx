@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Icon from "@/src/components/Icon";
 import ReactPlayer from "react-player";
 import { useEpisodePage } from "@/src/providers/EpisodePageProvider";
+import { setInterval } from "node:timers";
 
 const SeasonSwitcher = () => {
   const { seasons, setSelectedSeason } = useEpisodePage();
@@ -81,7 +82,7 @@ const Carousel = ({ delay = 3500 }: { delay?: number }) => {
   const hasItems = Boolean(items) && items.length !== 0;
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const timer = useRef<any>(null);
+  const timer = useRef<ReturnType<typeof setInterval>>(null);
 
   useEffect(() => {
     if (!timer.current && items.length > 0) {

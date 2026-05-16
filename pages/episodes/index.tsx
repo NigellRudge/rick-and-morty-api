@@ -47,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
   return {
     props: {
-      seasons: seasons,
+      seasons: seasons.slice(1, 5),
       defaultEpisodes: seasons[1]?.episodes,
       images: {
         backdrops: images.backdrops.slice(0, 5),

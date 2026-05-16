@@ -42,7 +42,7 @@ const useSearchInput = () => {
           .then(() => window.scrollTo(0, 0));
       }
     }
-  }, [debouncedValue]);
+  }, [debouncedValue, isFocused, router]);
 
   useEffect(() => {
     if (
@@ -58,7 +58,7 @@ const useSearchInput = () => {
         }),
       });
     }
-  }, [debouncedValue, isFocused, router?.query, router.pathname]);
+  }, [debouncedValue, isFocused, router.query, router.pathname, router]);
 
   useEffect(() => {
     if (router.query.name !== debouncedValue) {
@@ -77,7 +77,7 @@ const useSearchInput = () => {
     if (isCharacterPage(router.pathname)) {
       setIsFocused(true);
     }
-  }, [router, setInputValue]);
+  }, [debouncedValue, router, setInputValue]);
 
   return {
     isFocused,

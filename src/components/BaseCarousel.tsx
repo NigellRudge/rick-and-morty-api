@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import EpisodeInfoComponent from "@/src/components/SeasonInfo";
 import { EpisodeInfo } from "@/src/types/episode";
+import { setInterval } from "node:timers";
 
 const BaseCarousel = ({
   items,
@@ -13,7 +14,7 @@ const BaseCarousel = ({
   episode: EpisodeInfo;
 }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const timer = useRef<any>(null);
+  const timer = useRef<ReturnType<typeof setInterval>>(null);
 
   useEffect(() => {
     if (!timer.current && items.length > 0) {

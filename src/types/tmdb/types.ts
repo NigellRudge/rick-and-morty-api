@@ -2,7 +2,6 @@ export interface DetailInfo {
   adult: boolean;
   backdrop_path: string;
   created_by: CreatedBy[];
-  episode_run_time: any[];
   first_air_date: string;
   genres: Genre[];
   homepage: string;
@@ -74,10 +73,10 @@ export interface NextEpisodeToAir {
   episode_number: number;
   episode_type: string;
   production_code: string;
-  runtime: any;
+  runtime: number | string;
   season_number: number;
   show_id: number;
-  still_path: any;
+  still_path?: string;
 }
 
 export interface Network {

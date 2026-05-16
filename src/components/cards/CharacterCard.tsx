@@ -12,7 +12,7 @@ const CharacterCard = ({ character }: { character: Character }) => {
       layoutId={`selected-${character!.id}`}
       onClick={() => setSelectedCharacter(character)}
       animate={{ opacity: selectedCharacter?.id === character.id ? 0 : 1 }}
-      className=" cursor-pointer flex group relative w-full transform-gpu will-change-transform rounded-xl hover:z-10 border transition-all border-gray-700 shadow-xs overflow-hidden aspect-[4/6] hover:border-green-500 duration-200 ease-in-out"
+      className=" cursor-pointer flex group relative w-full transform-gpu will-change-transform rounded-xl hover:z-10 border transition-all border-gray-500 shadow-xs overflow-hidden aspect-[4/6] hover:border-green-500 duration-200 ease-in-out"
     >
       <div className="w-full overflow-hidden absolute inset-0 z-0">
         <Image
@@ -26,13 +26,13 @@ const CharacterCard = ({ character }: { character: Character }) => {
       </div>
       <div className="w-full ease-in-out duration-200 z-[2] mt-auto p-3">
         <div className="flex flex-col gap-0 items-start">
-          <h4 className="text-base md:text-lg group-hover:text-gray-100 transition-colors ease-in-out duration-200 text-gray-400 font-semibold">
+          <h4 className="text-base md:text-lg group-hover:text-white transition-colors ease-in-out duration-200 text-gray-200 font-semibold">
             {character.name}
           </h4>
-          <span className="text-xs font-medium group-hover:text-gray-200 transition-colors ease-in-out duration-200 text-gray-400">
+          <span className="text-xs font-medium group-hover:text-gray-100 transition-colors ease-in-out duration-200 text-gray-400">
             {character.species} {character.gender}
           </span>
-          <span className="text-xs font-medium text-gray-500">
+          <span className="text-xs font-medium text-gray-300">
             {character.origin.name}
           </span>
         </div>

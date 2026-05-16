@@ -1,6 +1,10 @@
-export const removeNullProperties = (obj: Record<string, any>) =>
+export const removeNullProperties = (
+  obj: Record<string, any>,
+): Record<string, any> =>
   Object.fromEntries(
-    Object.entries(obj).filter(([_, value]) => value !== null),
+    Object.entries(obj).filter(
+      ([key, value]) => typeof key === "string" && value !== null,
+    ),
   );
 
 export const getCharacterIdsFromUrls = (urls: string[]) => {

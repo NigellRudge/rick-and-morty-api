@@ -27,7 +27,7 @@ const useHasElementScrolled = ({
         container.removeEventListener("scroll", checkPosition);
       }
     };
-  }, []);
+  }, [scrollOffset]);
 
   return {
     ref,

@@ -11,7 +11,7 @@ const EpisodesPage = () => {
           <Carousel />
         </div>
         <h2 className="text-2xl md:text-xl font-semibold">Episodes</h2>
-        <Grid items={episodes as any} type="episode" isLoading={isLoading} />
+        <Grid items={episodes} type="episode" isLoading={isLoading} />
       </div>
     </>
   );

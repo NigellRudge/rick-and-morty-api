@@ -20,6 +20,7 @@ const LocationFilter = () => {
         className="react-select-container"
         classNamePrefix="react-select"
         // cacheOptions
+        // @ts-ignore
         loadOptions={fetchLocations}
         getOptionLabel={(location: Location) => location.name}
         getOptionValue={(location: Location) => location.id.toString()}
@@ -30,7 +31,7 @@ const LocationFilter = () => {
         placeholder="Select status"
         onChange={(data) => {
           if (data.length > 0) {
-            setSelectedLocation(data);
+            setSelectedLocation(data.map((item) => item));
             return;
           }
           clearFilters();
