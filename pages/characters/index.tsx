@@ -1,4 +1,4 @@
-import Layout from "@/src/layout/Layout";
+import Layout from "@/src/components/layout/Layout";
 import CharactersPage from "@/src/components/page-components/Characters";
 import CharacterPageProvider from "@/src/providers/CharacterPageProvider";
 

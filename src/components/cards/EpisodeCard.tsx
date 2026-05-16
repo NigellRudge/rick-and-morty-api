@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { TMDBEpisode } from "@/src/types/tmdb/season";
 import Icon from "@/src/components/Icon";
+import { getEpisodeCode } from "@/src/utils/episode";
+import Link from "next/link";
 
 const EpisodeNumber = ({
   season,
@@ -11,7 +13,7 @@ const EpisodeNumber = ({
 }) => (
   <div className=" absolute top-2 right-2 z-[2] flex flex-row bg-gray-500/80 rounded-xl px-2 py-1">
     <span className="text-xs font-medium text-gray-100">
-      {`S${String(season).padStart(2, "0")}E${String(episode).padStart(2, "0")}`}
+      {getEpisodeCode(season, episode)}
     </span>
   </div>
 );
@@ -49,7 +51,10 @@ const ReleaseDate = ({ releaseDate }: { releaseDate: string }) => (
 
 const EpisodeCard = ({ episode }: { episode: TMDBEpisode }) => {
   return (
-    <div className="animate-appear flex relative rounded-lg transform-gpu will-change-transform hover:z-10 hover:scale-[1.02] overflow-hidden group aspect-[6/4] border border-gray-500 hover:border-green-500 duration-200 ease-in-out transition-all">
+    <Link
+      href={`/episodes/${getEpisodeCode(episode.season_number, episode.episode_number)}`}
+      className="animate-appear flex relative rounded-lg transform-gpu will-change-transform hover:z-10 hover:scale-[1.02] overflow-hidden group aspect-[6/4] border border-gray-500 hover:border-green-500 duration-200 ease-in-out transition-all"
+    >
       <div className="w-full h-full relative">
         <Image
           src={episode.still_path}
@@ -79,7 +84,7 @@ const EpisodeCard = ({ episode }: { episode: TMDBEpisode }) => {
         season={episode.season_number}
         episode={episode.episode_number}
       />
-    </div>
+    </Link>
   );
 };
 

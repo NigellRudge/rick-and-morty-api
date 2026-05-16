@@ -1,5 +1,5 @@
 import EpisodesPage from "@/src/components/page-components/Episodes";
-import Layout from "@/src/layout/Layout";
+import Layout from "@/src/components/layout/Layout";
 import { GetServerSideProps } from "next";
 import { TMDBClient } from "@/src/http/tmdb-api";
 import { TMDBEpisode, TMDBSeasonInfo } from "@/src/types/tmdb/season";

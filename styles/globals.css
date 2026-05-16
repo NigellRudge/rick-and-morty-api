@@ -123,3 +123,7 @@ body {
   font-weight: normal;
   font-size: 0.9rem;
 }
+
+.page-wrapper {
+  @apply w-[calc(min(100vw,1600px)-32px)]
+}

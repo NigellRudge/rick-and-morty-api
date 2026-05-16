@@ -4,15 +4,16 @@ import { useEpisodePage } from "@/src/providers/EpisodePageProvider";
 
 const EpisodesPage = () => {
   const { episodes, isLoading } = useEpisodePage();
-
   return (
-    <div className="flex flex-col gap-4 md:pt-0 pt-4 w-[calc(min(100vw,1600px)-32px)]">
-      <div>
-        <Carousel />
+    <>
+      <div className="flex flex-col gap-4 md:pt-0 pt-4 page-wrapper">
+        <div>
+          <Carousel />
+        </div>
+        <h2 className="text-2xl md:text-xl font-semibold">Episodes</h2>
+        <Grid items={episodes as any} type="episode" isLoading={isLoading} />
       </div>
-      <h2 className="text-2xl md:text-xl font-semibold">Episodes</h2>
-      <Grid items={episodes as any} type="episode" isLoading={isLoading} />
-    </div>
+    </>
   );
 };
 

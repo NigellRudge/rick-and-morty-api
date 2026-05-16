@@ -7,8 +7,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/episodes",
-        destination: "/",
+        source: "/",
+        destination: "/episodes",
         permanent: true,
       },
     ];

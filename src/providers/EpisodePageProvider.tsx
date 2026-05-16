@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { TMDBEpisode, TMDBSeasonInfo } from "@/src/types/tmdb/season";
 import useFetchEpisodes from "@/src/hooks/useFetchEpisodes";
 import useBrowserBreakpoints from "@/src/hooks/useBrowserBreakpoint";
@@ -41,6 +41,7 @@ const EpisodePageProvider = ({
   const [selectedSeason, setSelectedSeason] = useState<TMDBSeasonInfo | null>(
     (Boolean(seasons) && seasons[1]) || null,
   );
+
   const { isMobileBreakpoint, isTabletBreakpoint, isSmallBreakpoint } =
     useBrowserBreakpoints();
 

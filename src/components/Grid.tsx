@@ -2,7 +2,6 @@ import { Character } from "@/src/types/character";
 import { Location } from "@/src/types/location";
 import CharacterCard from "@/src/components/cards/CharacterCard";
 import EpisodeCard from "@/src/components/cards/EpisodeCard";
-import LocationCard from "@/src/components/cards/LocationCard";
 import { TMDBEpisode } from "@/src/types/tmdb/season";
 import LoadingAnimation from "@/src/components/LoadingAnimation";
 
@@ -24,12 +23,6 @@ const GridItem = ({
       return (
         <li className="relative" key={item.id}>
           <EpisodeCard episode={item as TMDBEpisode} />
-        </li>
-      );
-    case "location":
-      return (
-        <li className="relative" key={item.id}>
-          <LocationCard location={item as Location} />
         </li>
       );
     default:

@@ -113,7 +113,7 @@ const Carousel = ({ delay = 3500 }: { delay?: number }) => {
       <div className="hidden lg:block h-full">
         <ReactPlayer
           muted={true}
-          playing={true}
+          playing={false}
           style={{
             width: "100%",
             height: "100%",

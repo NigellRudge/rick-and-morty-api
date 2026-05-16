@@ -1,6 +1,6 @@
 import Icon from "@/src/components/Icon";
 import useNavigationState from "@/src/hooks/useNavigationState";
-import SearchBar from "@/src/layout/SearchBar";
+import SearchBar from "@/src/components/layout/SearchBar";
 import Logo from "@/src/components/Logo";
 import { NavigationLinkItem } from "@/src/providers/NavigationStateProvider";
 import Link from "next/link";

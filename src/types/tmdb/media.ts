@@ -3,6 +3,7 @@ export interface MediaResponse {
   id: number;
   logos: Media[];
   posters: Media[];
+  stills?: Media[];
 }
 
 export interface Media {
