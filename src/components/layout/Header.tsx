@@ -2,9 +2,9 @@ import Icon from "@/shared/Icon";
 import useNavigationState from "@/hooks/useNavigationState";
 import SearchBar from "@/layout/SearchBar";
 import Logo from "@/shared/Logo";
-import { NavigationLinkItem } from "@/providers/NavigationStateProvider";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { NavigationLinkItem } from "@/types/navigation-link-item";
 
 const MenuButton = () => {
   const { setIsSideNavOpen } = useNavigationState();

@@ -5,11 +5,7 @@ import Layout from "@/layout/Layout";
 import EpisodePageProvider from "@/providers/EpisodePageProvider";
 import EpisodesPage from "@/page-components/Episodes";
 
-export default function Page({
-  seasons,
-  episodes,
-  images,
-}: {
+type PageProps = {
   seasons: TMDBSeasonInfo[];
   episodes: TMDBEpisode[];
   images: {
@@ -17,7 +13,9 @@ export default function Page({
     posters: string[];
   };
   newSeason: TMDBSeasonInfo;
-}) {
+};
+
+export default function Page({ seasons, episodes, images }: PageProps) {
   return (
     <Layout>
       <EpisodePageProvider

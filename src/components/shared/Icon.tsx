@@ -6,6 +6,10 @@ import {
   HiOutlineClock,
   HiOutlineCalendar,
   HiOutlineClipboardList,
+  HiPlay,
+  HiPause,
+  HiOutlineVolumeOff,
+  HiOutlineVolumeUp,
 } from "react-icons/hi";
 import { FaGithub } from "react-icons/fa6";
 import { AiTwotoneApi } from "react-icons/ai";
@@ -18,6 +22,10 @@ export type IconName =
   | "github"
   | "clipboard"
   | "api"
+  | "play"
+  | "pause"
+  | "mute"
+  | "unmute"
   | "calendar";
 
 const Icon = ({
@@ -48,6 +56,14 @@ const Icon = ({
       return <FaGithub className={className} size={size} />;
     case "api":
       return <AiTwotoneApi className={className} size={size} />;
+    case "play":
+      return <HiPlay className={className} size={size} />;
+    case "pause":
+      return <HiPause className={className} size={size} />;
+    case "mute":
+      return <HiOutlineVolumeOff className={className} size={size} />;
+    case "unmute":
+      return <HiOutlineVolumeUp className={className} size={size} />;
     default:
       return null;
   }

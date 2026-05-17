@@ -7,6 +7,135 @@ import { setInterval } from "node:timers";
 import useEpisodePage from "@/src/hooks/useEpisodesPage";
 import { hasItems } from "@/utils/list";
 
+const PlayButton = ({ onClick }: { onClick: () => void }) => (
+  <div
+    onClick={onClick}
+    className="absolute g hidden roup top-1/2 left-1/2 cursor-pointer -translate-x-1/2  z-[4] hover:scale-[1.05] transition-transform duration-200 ease-in-out hover:bg-gray-600 lg:flex items-center justify-center w-16 h-16 rounded-full bg-gray-600/80"
+  >
+    <Icon
+      iconName="play"
+      className="text-gray-300 group-hover:text-gray-100"
+      size={24}
+    />
+  </div>
+);
+
+const PauseButton = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <div
+      onClick={onClick}
+      className="absolute hidden lg:group-hover:flex  top-1/2 left-1/2 cursor-pointer -translate-x-1/2  z-[4] group:hover:scale-[1.05] transition-transform duration-200 ease-in-out hover:bg-gray-600 items-center justify-center w-16 h-16 rounded-full bg-gray-600/80"
+    >
+      <Icon
+        iconName="pause"
+        className="text-gray-300 group-hover:text-gray-100"
+        size={24}
+      />
+    </div>
+  );
+};
+
+const MuteButton = ({
+  onClick,
+  isMuted = true,
+}: {
+  onClick: () => void;
+  isMuted: boolean;
+}) => (
+  <div
+    onClick={onClick}
+    className="absolute group bottom-8 right-8 z-[4] cursor-pointer -translate-x-1/2 hover:scale-[1.05] transition-transform duration-200 ease-in-out hover:bg-gray-600 hidden lg:flex items-center justify-center w-16 h-16 rounded-full bg-gray-600/80"
+  >
+    <Icon
+      className="text-gray-300 group-hover:text-gray-100"
+      iconName={isMuted ? "mute" : "unmute"}
+      size={24}
+    />
+  </div>
+);
+
+const VideoPlayer = ({
+  isPlaying = false,
+  isMuted = true,
+  videoUrl,
+}: {
+  isPlaying: boolean;
+  isMuted: boolean;
+  videoUrl: string;
+}) => {
+  return (
+    <div className="w-full h-full relative hidden lg:block overflow-hidden  group">
+      <ReactPlayer
+        muted={isMuted}
+        playing={isPlaying}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+        src={videoUrl}
+      />
+    </div>
+  );
+};
+
+const ImageCarousel = ({
+  items,
+  delay = 3500,
+}: {
+  items: string[];
+  delay?: number;
+}) => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const timer = useRef<ReturnType<typeof setInterval>>(null);
+
+  useEffect(() => {
+    if (!timer.current && items.length > 0) {
+      timer.current = setInterval(() => {
+        setCurrentIndex((prev) => {
+          if (prev + 1 >= items.length) return 0;
+          return prev + 1;
+        });
+      }, delay);
+    }
+  }, [delay, items.length]);
+
+  return (
+    <div className="w-full h-full relative block lg:hidden">
+      <div className="inset-0 z-[2] absolute  bg-gradient-to-t from-gray-900/80 via-gray-700/70 to-gray-900/30 transition-all duration-200 ease-in-out" />
+      <div className="block lg:hidden">
+        {hasItems(items) &&
+          items.map((item, index) => (
+            <div
+              id={`carousel-item-${item}-${index}`}
+              key={`carousel-item-${item}-${index}`}
+              className={`w-full h-full transition-opacity ease-in-out duration-300 absolute z-[1] ${index === currentIndex ? "opacity-100" : "opacity-0"}`}
+            >
+              <Image
+                src={item}
+                alt={item}
+                className="w-full h-full object-cover object-center"
+                fill
+                sizes="(min-width:765px) 600px, (min-width:1025px) 90vw, 400px"
+                loading="eager"
+                quality="80"
+              />
+            </div>
+          ))}
+      </div>
+      <div className="flex lg:hidden absolute bottom-0 right-0 left-0 h-12 z-[10] p-4 flex-row gap-2 items-center justify-center">
+        {hasItems(items) &&
+          items.map((item, index) => (
+            <button
+              key={`dot-item-${item}-${index}`}
+              onClick={() => setCurrentIndex(index)}
+              className={`h-2 w-2 cursor-pointer rounded-full transition-colors ease-in-out duration-300 ${index === currentIndex ? "bg-emerald-600" : "bg-gray-600"}`}
+            />
+          ))}
+      </div>
+    </div>
+  );
+};
+
 const SeasonSwitcher = () => {
   const { seasons, setSelectedSeason } = useEpisodePage();
   if (!seasons) return null;
@@ -80,20 +209,8 @@ const SeasonInfo = () => {
 
 const SeasonInfoCarousel = ({ delay = 3500 }: { delay?: number }) => {
   const { carouselItems: items, selectedSeason } = useEpisodePage();
-
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const timer = useRef<ReturnType<typeof setInterval>>(null);
-
-  useEffect(() => {
-    if (!timer.current && items.length > 0) {
-      timer.current = setInterval(() => {
-        setCurrentIndex((prev) => {
-          if (prev + 1 >= items.length) return 0;
-          return prev + 1;
-        });
-      }, delay);
-    }
-  }, [delay, items.length]);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(true);
 
   const carouselVideoUrl: string = useMemo(() => {
     let youtubeKey = process.env.NEXT_PUBLIC_RICK_AND_MORTY_YT_TRAILER_KEY;
@@ -109,50 +226,24 @@ const SeasonInfoCarousel = ({ delay = 3500 }: { delay?: number }) => {
   }, [selectedSeason]);
 
   return (
-    <div className="w-full aspect-[4/6] md:aspect-[5/6] max-h-[70vh] lg:aspect-video relative rounded-xl overflow-hidden  group">
+    <div className="w-full aspect-[4/6] md:aspect-[5/6] max-h-[70vh] lg:aspect-video relative rounded-xl overflow-hidden">
       <SeasonInfo />
-      <div className="hidden lg:block h-full">
-        <ReactPlayer
-          muted={true}
-          playing={false}
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-          src={carouselVideoUrl}
-        />
-      </div>
-      <div className="inset-0 z-[2] absolute  bg-gradient-to-t from-gray-900/80 via-gray-700/70 to-gray-900/30 transition-all duration-200 ease-in-out" />
-      <div className="block lg:hidden">
-        {hasItems(items) &&
-          items.map((item, index) => (
-            <div
-              id={`carousel-item-${item}-${index}`}
-              key={`carousel-item-${item}-${index}`}
-              className={`w-full h-full transition-opacity ease-in-out duration-300 absolute z-[1] ${index === currentIndex ? "opacity-100" : "opacity-0"}`}
-            >
-              <Image
-                src={item}
-                alt={item}
-                className="w-full h-full object-cover object-center"
-                fill
-                sizes="(min-width:765px) 600px, (min-width:1025px) 90vw, 400px"
-                loading="eager"
-                quality="80"
-              />
-            </div>
-          ))}
-      </div>
-      <div className="flex lg:hidden absolute bottom-0 right-0 left-0 h-12 z-[10] p-4 flex-row gap-2 items-center justify-center">
-        {hasItems(items) &&
-          items.map((item, index) => (
-            <button
-              key={`dot-item-${item}-${index}`}
-              onClick={() => setCurrentIndex(index)}
-              className={`h-2 w-2 cursor-pointer rounded-full transition-colors ease-in-out duration-300 ${index === currentIndex ? "bg-emerald-600" : "bg-gray-600"}`}
-            />
-          ))}
-      </div>
+      <VideoPlayer
+        videoUrl={carouselVideoUrl}
+        isMuted={isMuted}
+        isPlaying={isPlaying}
+      />
+      {isPlaying ? (
+        <PauseButton onClick={() => setIsPlaying(false)} />
+      ) : (
+        <PlayButton onClick={() => setIsPlaying(true)} />
+      )}
+      <MuteButton
+        onClick={() => setIsMuted((prev) => !prev)}
+        isMuted={isMuted}
+      />
+      <ImageCarousel items={items} delay={delay} />
+      <div className="inset-0 z-[2] absolute bg-gradient-to-t from-gray-900/80 via-gray-700/70 to-gray-900/30 transition-all duration-200 ease-in-out" />
     </div>
   );
 };

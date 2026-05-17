@@ -7,13 +7,12 @@ import { Character } from "@/types/rick-and-morty-api/character";
 import { TMDBEpisodeInfo } from "@/types/tmdb/episode";
 import EpisodeDetail from "@/page-components/EpisodeDetail";
 
-export default function Page({
-  episode,
-  characters,
-}: {
+type PageProps = {
   episode: TMDBEpisodeInfo;
   characters: Character[];
-}) {
+};
+
+export default function Page({ episode, characters }: PageProps) {
   return (
     <Layout>
       <EpisodeDetail episode={episode} characters={characters} />

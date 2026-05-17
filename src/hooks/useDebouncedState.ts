@@ -3,7 +3,12 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 export default function useDebouncedState<T>(
   initialState: T,
   delay: number = 300,
-): [state: T, setState: Dispatch<SetStateAction<T>>, debouncedState: T] {
+): [
+  state: T,
+  setState: Dispatch<SetStateAction<T>>,
+  debouncedState: T,
+  setDebouncedState: Dispatch<SetStateAction<T>>,
+] {
   const [state, setState] = useState<T>(initialState);
   const [debouncedState, setDebouncedState] = useState<T>(initialState);
 
@@ -16,5 +21,5 @@ export default function useDebouncedState<T>(
     };
   }, [state, delay]);
 
-  return [state, setState, debouncedState];
+  return [state, setState, debouncedState, setDebouncedState];
 }

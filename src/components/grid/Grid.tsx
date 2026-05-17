@@ -5,31 +5,7 @@ import EpisodeCard from "@/cards/EpisodeCard";
 import { TMDBEpisode } from "@/types/tmdb/season";
 import LoadingAnimation from "@/shared/LoadingAnimation";
 import { hasItems } from "@/utils/list";
-
-const GridItem = ({
-  item,
-  type,
-}: {
-  item: Character | Location | TMDBEpisode;
-  type: "episode" | "location" | "character";
-}) => {
-  switch (type) {
-    case "character":
-      return (
-        <li className="relative" key={item.id}>
-          <CharacterCard character={item as Character} />
-        </li>
-      );
-    case "episode":
-      return (
-        <li className="relative" key={item.id}>
-          <EpisodeCard episode={item as TMDBEpisode} />
-        </li>
-      );
-    default:
-      return null;
-  }
-};
+import { GridItemType } from "@/types/shared";
 
 const Grid = ({
   items,
@@ -37,7 +13,7 @@ const Grid = ({
   isLoading = false,
 }: {
   items?: Character[] | Location[] | TMDBEpisode[] | null;
-  type: "episode" | "location" | "character";
+  type: GridItemType;
   isLoading?: boolean;
   loadMore?: () => Promise<void>;
 }) => {
@@ -60,9 +36,24 @@ const Grid = ({
       className={`grid ${columnLayout} overflow-y-auto no-scrollbar relative gap-3 cursor-pointer px-1 py-1 h-full`}
     >
       {hasItems(items) &&
-        items?.map((item) => (
-          <GridItem key={item.id} item={item} type={type} />
-        ))}
+        items?.map((item) => {
+          switch (type) {
+            case "character":
+              return (
+                <li className="relative" key={item.id}>
+                  <CharacterCard character={item as Character} />
+                </li>
+              );
+            case "episode":
+              return (
+                <li className="relative" key={item.id}>
+                  <EpisodeCard episode={item as TMDBEpisode} />
+                </li>
+              );
+            default:
+              return null;
+          }
+        })}
     </ul>
   );
 };
