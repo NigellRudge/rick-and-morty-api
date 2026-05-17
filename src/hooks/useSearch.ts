@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
-import useDebouncedState from "@/src/hooks/useDebouncedState";
-import { removeNullProperties } from "@/src/utils/list";
+import useDebouncedState from "@/hooks/useDebouncedState";
+import { removeNullProperties } from "@/utils/list";
 
 const isCharacterPage = (pathname: string) =>
   pathname.startsWith("/characters");

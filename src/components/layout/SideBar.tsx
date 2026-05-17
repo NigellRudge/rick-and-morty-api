@@ -1,8 +1,8 @@
-import useNavigationState from "@/src/hooks/useNavigationState";
+import useNavigationState from "@/hooks/useNavigationState";
 import Link from "next/link";
-import Icon from "@/src/components/Icon";
-import { NavigationLinkItem } from "@/src/providers/NavigationStateProvider";
-import Logo from "@/src/components/Logo";
+import Icon from "@/shared/Icon";
+import Logo from "@/shared/Logo";
+import { NavigationLinkItem } from "@/types/navigation-link-item";
 
 const CloseMenuButton = () => {
   const { setIsSideNavOpen } = useNavigationState();

@@ -1,9 +1,10 @@
-import { Character } from "@/src/types/character";
-import { Location } from "@/src/types/location";
-import CharacterCard from "@/src/components/cards/CharacterCard";
-import EpisodeCard from "@/src/components/cards/EpisodeCard";
-import { TMDBEpisode } from "@/src/types/tmdb/season";
-import LoadingAnimation from "@/src/components/LoadingAnimation";
+import { Character } from "@/types/rick-and-morty-api/character";
+import { Location } from "@/types/rick-and-morty-api/location";
+import CharacterCard from "@/cards/CharacterCard";
+import EpisodeCard from "@/cards/EpisodeCard";
+import { TMDBEpisode } from "@/types/tmdb/season";
+import LoadingAnimation from "@/shared/LoadingAnimation";
+import { hasItems } from "@/utils/list";
 
 const GridItem = ({
   item,
@@ -58,9 +59,10 @@ const Grid = ({
     <ul
       className={`grid ${columnLayout} overflow-y-auto no-scrollbar relative gap-3 cursor-pointer px-1 py-1 h-full`}
     >
-      {items?.map((item) => (
-        <GridItem key={item.id} item={item} type={type} />
-      ))}
+      {hasItems(items) &&
+        items?.map((item) => (
+          <GridItem key={item.id} item={item} type={type} />
+        ))}
     </ul>
   );
 };

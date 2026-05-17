@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import Icon from "@/src/components/Icon";
+import Icon from "@/src/components/shared/Icon";
 import ReactPlayer from "react-player";
-import { useEpisodePage } from "@/src/providers/EpisodePageProvider";
 import { setInterval } from "node:timers";
+import useEpisodePage from "@/src/hooks/useEpisodesPage";
+import { hasItems } from "@/utils/list";
 
 const SeasonSwitcher = () => {
   const { seasons, setSelectedSeason } = useEpisodePage();
@@ -40,7 +41,7 @@ const SeasonInfo = () => {
   if (!selectedSeason) return null;
   return (
     <div className="absolute bottom-[24px] left-[16px] right-[16px] flex flex-col mt-auto lg:max-w-[75%] z-[4] p-2 sm:p-4 lg:items-start items-center">
-      <div className="flex w-48 aspect-[4/6] overflow-hidden rounded-lg relative">
+      <div className="flex w-32  sm:w-48 aspect-[4/6] overflow-hidden rounded-lg relative">
         <Image
           src={selectedSeason.poster_path}
           alt={selectedSeason.name}
@@ -77,9 +78,8 @@ const SeasonInfo = () => {
   );
 };
 
-const Carousel = ({ delay = 3500 }: { delay?: number }) => {
+const SeasonInfoCarousel = ({ delay = 3500 }: { delay?: number }) => {
   const { carouselItems: items, selectedSeason } = useEpisodePage();
-  const hasItems = Boolean(items) && items.length !== 0;
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const timer = useRef<ReturnType<typeof setInterval>>(null);
@@ -109,7 +109,7 @@ const Carousel = ({ delay = 3500 }: { delay?: number }) => {
   }, [selectedSeason]);
 
   return (
-    <div className="w-full aspect-[4/6] md:aspect-[5/6] max-h-[70vh] lg:aspect-video md:max-h-[50vh] relative rounded-b-xl lg:rounded-xl overflow-hidden  group">
+    <div className="w-full aspect-[4/6] md:aspect-[5/6] max-h-[70vh] lg:aspect-video relative rounded-xl overflow-hidden  group">
       <SeasonInfo />
       <div className="hidden lg:block h-full">
         <ReactPlayer
@@ -124,7 +124,7 @@ const Carousel = ({ delay = 3500 }: { delay?: number }) => {
       </div>
       <div className="inset-0 z-[2] absolute  bg-gradient-to-t from-gray-900/80 via-gray-700/70 to-gray-900/30 transition-all duration-200 ease-in-out" />
       <div className="block lg:hidden">
-        {hasItems &&
+        {hasItems(items) &&
           items.map((item, index) => (
             <div
               id={`carousel-item-${item}-${index}`}
@@ -144,7 +144,7 @@ const Carousel = ({ delay = 3500 }: { delay?: number }) => {
           ))}
       </div>
       <div className="flex lg:hidden absolute bottom-0 right-0 left-0 h-12 z-[10] p-4 flex-row gap-2 items-center justify-center">
-        {hasItems &&
+        {hasItems(items) &&
           items.map((item, index) => (
             <button
               key={`dot-item-${item}-${index}`}
@@ -157,4 +157,4 @@ const Carousel = ({ delay = 3500 }: { delay?: number }) => {
   );
 };
 
-export default Carousel;
+export default SeasonInfoCarousel;

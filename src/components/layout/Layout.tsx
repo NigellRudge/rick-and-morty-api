@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import Head from "next/head";
-import { name } from "../../../package.json";
-import SideBar from "@/src/components/layout/SideBar";
-import Header from "@/src/components/layout/Header";
+import { name } from "@/package.json";
+import SideBar from "@/layout/SideBar";
+import Header from "@/layout/Header";
 import { LayoutGroup } from "framer-motion";
-import CharacterDetailModal from "@/src/components/modals/CharacterDetailModal";
-import Footer from "@/src/components/layout/Footer";
+import CharacterDetailModal from "@/modals/CharacterDetailModal";
+import Footer from "@/layout/Footer";
 
 const Layout = ({
   children,

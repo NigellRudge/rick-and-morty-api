@@ -6,15 +6,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import { IconName } from "@/src/components/Icon";
-import { Character } from "@/src/types/character";
+import { Character } from "@/types/rick-and-morty-api/character";
 import { useRouter } from "next/router";
+import { NavigationLinkItem } from "@/types/navigation-link-item";
 
-export type NavigationLinkItem = {
-  url: string;
-  label: string;
-  iconName?: IconName;
-};
 type NavigationStateType = {
   isSideNavOpen: boolean;
   setIsSideNavOpen: Dispatch<SetStateAction<boolean>>;

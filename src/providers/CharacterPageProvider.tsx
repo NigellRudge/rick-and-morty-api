@@ -2,25 +2,18 @@ import {
   createContext,
   ReactNode,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
-import { Character } from "@/src/types/character";
+import { Character } from "@/types/rick-and-morty-api/character";
 import useSWR from "swr";
-import { rickAndMortyClient } from "@/src/http/rick-and-morty-api";
-import { FilterType } from "@/src/types/filters";
-import { Location } from "@/src/types/location";
+import { rickAndMortyClient } from "@/http/rick-and-morty-api";
+import { FilterType } from "@/types/filters";
+import { Location } from "@/types/rick-and-morty-api/location";
 import { useRouter } from "next/router";
 import debounce from "lodash/debounce";
 import { DebouncedFunc } from "lodash";
-
-export const availableFilters: Partial<FilterType> = {
-  gender: ["male", "female", "genderless"],
-  status: ["alive", "dead", "unknown"],
-  species: ["Alien", "Human"],
-};
 
 type ContextType = {
   isLoading: boolean;
@@ -41,7 +34,7 @@ type ContextType = {
   ) => void;
 };
 
-const CharacterPageContext = createContext<ContextType>({
+export const CharacterPageContext = createContext<ContextType>({
   isLoading: false,
   results: [],
   filters: {},
@@ -196,5 +189,3 @@ const CharacterPageProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export default CharacterPageProvider;
-
-export const useCharacterPage = () => useContext(CharacterPageContext);

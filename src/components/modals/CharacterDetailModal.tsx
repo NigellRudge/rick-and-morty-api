@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
-import useNavigationState from "@/src/hooks/useNavigationState";
-import Icon from "@/src/components/Icon";
-import { Status } from "@/src/components/cards/shared";
+import useNavigationState from "@/hooks/useNavigationState";
+import Icon from "@/shared/Icon";
 import Image from "next/image";
+import CharacterStatus from "@/shared/CharacterStatus";
 
 const CharacterDetailModal = () => {
   const { selectedCharacter, setSelectedCharacter } = useNavigationState();
@@ -64,7 +64,7 @@ const CharacterDetailModal = () => {
                   </div>
                 </div>
               </div>
-              <Status status={selectedCharacter!.status} />
+              <CharacterStatus status={selectedCharacter!.status} />
             </div>
           </motion.div>
         </>

@@ -1,8 +1,8 @@
-import { Character } from "@/src/types/character";
+import { Character } from "@/types/rick-and-morty-api/character";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import useNavigationState from "@/src/hooks/useNavigationState";
-import { Status } from "@/src/components/cards/shared";
+import useNavigationState from "@/hooks/useNavigationState";
+import CharacterStatus from "@/shared/CharacterStatus";
 
 const CharacterCard = ({ character }: { character: Character }) => {
   const { setSelectedCharacter, selectedCharacter } = useNavigationState();
@@ -37,7 +37,7 @@ const CharacterCard = ({ character }: { character: Character }) => {
           </span>
         </div>
       </div>
-      <Status status={character.status} />
+      <CharacterStatus status={character.status} />
     </motion.button>
   );
 };

@@ -1,8 +1,8 @@
-import Icon from "@/src/components/Icon";
-import useNavigationState from "@/src/hooks/useNavigationState";
-import SearchBar from "@/src/components/layout/SearchBar";
-import Logo from "@/src/components/Logo";
-import { NavigationLinkItem } from "@/src/providers/NavigationStateProvider";
+import Icon from "@/shared/Icon";
+import useNavigationState from "@/hooks/useNavigationState";
+import SearchBar from "@/layout/SearchBar";
+import Logo from "@/shared/Logo";
+import { NavigationLinkItem } from "@/providers/NavigationStateProvider";
 import Link from "next/link";
 import { useRouter } from "next/router";
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { TMDBEpisode } from "@/src/types/tmdb/season";
-import Icon from "@/src/components/Icon";
-import { getEpisodeCode } from "@/src/utils/episode";
+import { TMDBEpisode } from "@/types/tmdb/season";
+import Icon from "@/shared/Icon";
+import { getEpisodeCode } from "@/utils/episode";
 import Link from "next/link";
 
 const EpisodeNumber = ({

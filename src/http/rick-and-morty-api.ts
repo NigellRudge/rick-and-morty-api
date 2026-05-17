@@ -1,18 +1,22 @@
-import { Character } from "@/src/types/character";
-import { RMResponse } from "@/src/types/shared";
-import { Episode } from "@/src/types/episode";
-import { Location } from "@/src/types/location";
-import BaseClient from "@/src/http/base-client";
-import { FilterType } from "@/src/types/filters";
-import { getCharacterIdsFromUrls } from "@/src/utils/list";
+import { Character } from "@/types/rick-and-morty-api/character";
+import { Response } from "@/types/rick-and-morty-api/shared";
+import { Episode } from "@/types/rick-and-morty-api/episode";
+import { Location } from "@/types/rick-and-morty-api/location";
+import { FilterType } from "@/types/filters";
+import { getCharacterIdsFromUrls } from "@/utils/list";
+import axios, { AxiosInstance } from "axios";
 
-class RickAndMortyApi extends BaseClient {
+class RickAndMortyApi {
+  private readonly axiosClient: AxiosInstance;
+
   constructor() {
-    super(process.env.NEXT_PUBLIC_RICK_AND_MORTY_API_URL || "");
+    this.axiosClient = axios.create({
+      baseURL: process.env.NEXT_PUBLIC_RICK_AND_MORTY_API_URL || "",
+    });
   }
 
   public getCharacters = async (filters?: FilterType) =>
-    await this.get<RMResponse<Character>>("/character", filters);
+    await this.get<Response<Character>>("/character", filters);
 
   public getCharactersById = async (ids: number[]) => {
     if (ids.length === 0) {
@@ -22,10 +26,10 @@ class RickAndMortyApi extends BaseClient {
   };
 
   public getEpisodeByCode = async (code: string) =>
-    await this.get<RMResponse<Episode>>(`/episode?episode=${code}`);
+    await this.get<Response<Episode>>(`/episode?episode=${code}`);
 
   public getLocations = async (name: string) =>
-    await this.get<RMResponse<Location>>("/location", { name });
+    await this.get<Response<Location>>("/location", { name });
 
   public getEpisodeCast = async (episodeId: string) => {
     try {
@@ -44,6 +48,22 @@ class RickAndMortyApi extends BaseClient {
       return [];
     }
   };
+
+  private async get<T>(
+    url: string,
+    params?: Record<string, string | number | object>,
+  ): Promise<T | null> {
+    try {
+      const response = await this.axiosClient.get<T>(url, { params });
+      if (response.status !== 200) {
+        return null;
+      }
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 }
 
 export const rickAndMortyClient = new RickAndMortyApi();

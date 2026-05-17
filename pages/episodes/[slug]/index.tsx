@@ -1,17 +1,17 @@
 import Layout from "@/src/components/layout/Layout";
 import { GetServerSideProps } from "next";
-import { TMDBClient } from "@/src/http/tmdb-api";
-import EpisodeDetail from "@/src/components/page-components/EpisodeDetail";
+import { TMDBClient } from "@/http/tmdb-api";
 import { parseEpisodeCode } from "@/src/utils/episode";
-import { rickAndMortyClient } from "@/src/http/rick-and-morty-api";
-import { Character } from "@/src/types/character";
-import { EpisodeInfo } from "@/src/types/episode";
+import { rickAndMortyClient } from "@/http/rick-and-morty-api";
+import { Character } from "@/types/rick-and-morty-api/character";
+import { TMDBEpisodeInfo } from "@/types/tmdb/episode";
+import EpisodeDetail from "@/page-components/EpisodeDetail";
 
 export default function Page({
   episode,
   characters,
 }: {
-  episode: EpisodeInfo;
+  episode: TMDBEpisodeInfo;
   characters: Character[];
 }) {
   return (

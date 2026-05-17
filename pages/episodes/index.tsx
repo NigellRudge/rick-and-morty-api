@@ -1,9 +1,9 @@
-import EpisodesPage from "@/src/components/page-components/Episodes";
-import Layout from "@/src/components/layout/Layout";
 import { GetServerSideProps } from "next";
-import { TMDBClient } from "@/src/http/tmdb-api";
+import { TMDBClient } from "@/http/tmdb-api";
 import { TMDBEpisode, TMDBSeasonInfo } from "@/src/types/tmdb/season";
-import EpisodePageProvider from "@/src/providers/EpisodePageProvider";
+import Layout from "@/layout/Layout";
+import EpisodePageProvider from "@/providers/EpisodePageProvider";
+import EpisodesPage from "@/page-components/Episodes";
 
 export default function Page({
   seasons,

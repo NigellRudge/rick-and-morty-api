@@ -1,7 +1,7 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import { TMDBEpisode, TMDBSeasonInfo } from "@/src/types/tmdb/season";
-import useFetchEpisodes from "@/src/hooks/useFetchEpisodes";
-import useBrowserBreakpoints from "@/src/hooks/useBrowserBreakpoint";
+import { createContext, ReactNode, useState } from "react";
+import { TMDBEpisode, TMDBSeasonInfo } from "@/types/tmdb/season";
+import useFetchEpisodes from "@/hooks/useFetchEpisodes";
+import useBrowserBreakpoints from "@/hooks/useBrowserBreakpoint";
 
 type ContextType = {
   selectedSeason: TMDBSeasonInfo | null;
@@ -12,7 +12,7 @@ type ContextType = {
   seasons?: TMDBSeasonInfo[];
 };
 
-const EpisodePageContext = createContext<ContextType>({
+export const EpisodePageContext = createContext<ContextType>({
   selectedSeason: null,
   setSelectedSeason: () => {},
   isLoading: false,
@@ -74,5 +74,3 @@ const EpisodePageProvider = ({
 };
 
 export default EpisodePageProvider;
-
-export const useEpisodePage = () => useContext(EpisodePageContext);

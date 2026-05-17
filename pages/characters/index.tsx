@@ -1,6 +1,6 @@
-import Layout from "@/src/components/layout/Layout";
-import CharactersPage from "@/src/components/page-components/Characters";
-import CharacterPageProvider from "@/src/providers/CharacterPageProvider";
+import CharacterPageProvider from "@/providers/CharacterPageProvider";
+import CharactersPage from "@/page-components/Characters";
+import Layout from "@/layout/Layout";
 
 export default function Home() {
   return (

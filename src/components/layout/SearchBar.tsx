@@ -1,5 +1,5 @@
-import useSearch from "@/src/hooks/useSearch";
-import Icon from "@/src/components/Icon";
+import useSearch from "@/hooks/useSearch";
+import Icon from "@/shared/Icon";
 
 const SearchBar = ({
   showNavigationOverContent = false,

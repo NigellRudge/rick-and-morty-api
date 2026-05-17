@@ -1,10 +1,9 @@
 import Select from "react-select";
 import AsyncSelect from "react-select/async";
-import {
-  availableFilters,
-  useCharacterPage,
-} from "@/src/providers/CharacterPageProvider";
-import { Location } from "@/src/types/location";
+import { Location } from "@/types/rick-and-morty-api/location";
+import useCharacterPage from "@/src/hooks/useCharacterPage";
+import { availableFilters } from "@/types/filters";
+import { hasItems } from "@/utils/list";
 
 const LocationFilter = () => {
   const {
@@ -19,7 +18,7 @@ const LocationFilter = () => {
       <AsyncSelect
         className="react-select-container"
         classNamePrefix="react-select"
-        // cacheOptions
+        cacheOptions
         // @ts-ignore
         loadOptions={fetchLocations}
         getOptionLabel={(location: Location) => location.name}
@@ -28,9 +27,9 @@ const LocationFilter = () => {
           updateActiveFiltersForKey("locationName", data)
         }
         isMulti
-        placeholder="Select status"
+        placeholder="Select Location"
         onChange={(data) => {
-          if (data.length > 0) {
+          if (hasItems(data.length)) {
             setSelectedLocation(data.map((item) => item));
             return;
           }
@@ -54,7 +53,7 @@ const GenderFilter = () => {
           value: item,
         }))}
         isMulti
-        placeholder="Select status"
+        placeholder="Select Character Gender"
         onChange={(data) => {
           updateActiveFiltersForKey(
             "gender",
@@ -79,7 +78,7 @@ const SpeciesFilter = () => {
           value: item,
         }))}
         isMulti
-        placeholder="Select status"
+        placeholder="Select character species"
         onChange={(data) => {
           updateActiveFiltersForKey(
             "species",

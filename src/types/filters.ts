@@ -10,3 +10,9 @@ export type FilterType = {
   name?: string;
   selectedIds?: number[];
 };
+
+export const availableFilters: Partial<FilterType> = {
+  gender: ["male", "female", "genderless"],
+  status: ["alive", "dead", "unknown"],
+  species: ["Alien", "Human"],
+};

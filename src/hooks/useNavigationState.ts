@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavigationStateContext } from "@/src/providers/NavigationStateProvider";
+import { NavigationStateContext } from "@/providers/NavigationStateProvider";
 
 const useNavigationState = () => useContext(NavigationStateContext);
 

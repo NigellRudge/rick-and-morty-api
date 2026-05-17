@@ -18,3 +18,8 @@ export const getCharacterIdsFromUrls = (urls: string[]) => {
     )
     .map((id) => parseInt(id));
 };
+
+export const hasItems = (item: any) => {
+  if (!Boolean(item) && !Array.isArray(item)) return false;
+  return item.length !== 0;
+};

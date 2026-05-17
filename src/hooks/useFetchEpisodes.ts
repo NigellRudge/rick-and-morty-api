@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useSWR from "swr";
-import { TMDBEpisode } from "@/src/types/tmdb/season";
-import { TMDBClient } from "@/src/http/tmdb-api";
+import { TMDBEpisode } from "@/types/tmdb/season";
+import { TMDBClient } from "@/http/tmdb-api";
 
 const useFetchEpisodes = ({
   defaultEpisodes,

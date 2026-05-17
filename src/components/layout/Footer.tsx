@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Icon from "@/src/components/Icon";
+import Icon from "@/shared/Icon";
 import Image from "next/image";
 
 const Footer = () => (

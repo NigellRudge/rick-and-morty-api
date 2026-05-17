@@ -1,4 +1,4 @@
-export const Status = ({
+const CharacterStatus = ({
   status,
 }: {
   status: "unknown" | "Alive" | "Dead" | string;
@@ -15,3 +15,5 @@ export const Status = ({
     </div>
   );
 };
+
+export default CharacterStatus;

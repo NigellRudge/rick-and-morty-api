@@ -1,14 +1,4 @@
-export interface Episode {
-  id: number;
-  name: string;
-  air_date: string;
-  episode: string;
-  characters: string[];
-  url: string;
-  created: string;
-}
-
-export interface EpisodeInfo {
+export interface TMDBEpisodeInfo {
   air_date: string;
   crew: Crew[];
   episode_number: number;

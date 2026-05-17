@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import NavigationStateProvider from "@/src/providers/NavigationStateProvider";
 import { Inter } from "next/font/google";
+import NavigationStateProvider from "@/providers/NavigationStateProvider";
 
 const carterFont = Inter({
   weight: "500",

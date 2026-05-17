@@ -1,8 +1,9 @@
 import axios, { AxiosInstance } from "axios";
-import { DetailInfo } from "@/src/types/tmdb/types";
-import { TMDBSeasonInfo } from "@/src/types/tmdb/season";
-import { MediaResponse, Video, VideoResponse } from "@/src/types/tmdb/media";
-import { EpisodeInfo } from "@/src/types/episode";
+import { DetailInfo } from "@/types/tmdb/types";
+import { TMDBSeasonInfo } from "@/types/tmdb/season";
+import { MediaResponse, Video, VideoResponse } from "@/types/tmdb/media";
+import { TMDBEpisodeInfo } from "@/types/tmdb/episode";
+import { hasItems } from "@/utils/list";
 
 class TMDBAPI {
   private readonly externalId =
@@ -71,9 +72,9 @@ class TMDBAPI {
   public async getEpisodeInfo(
     seasonNumber: number,
     episodeNumber: number,
-  ): Promise<EpisodeInfo | null> {
+  ): Promise<TMDBEpisodeInfo | null> {
     try {
-      const response = await this.axios.get<EpisodeInfo>(
+      const response = await this.axios.get<TMDBEpisodeInfo>(
         `/tv/${process.env.NEXT_PUBLIC_RICK_AND_MORTY_EXTERNAL_ID}/season/${seasonNumber}/episode/${episodeNumber}`,
         { params: { api_key: this.apiKey } },
       );
@@ -84,7 +85,7 @@ class TMDBAPI {
         response.data.season_number,
         response.data.episode_number,
       );
-      if (images?.stills && images?.stills?.length > 0) {
+      if (images?.stills && hasItems(images?.stills)) {
         response.data.images = images;
       }
       return response.data;

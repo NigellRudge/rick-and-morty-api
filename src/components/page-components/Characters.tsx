@@ -1,6 +1,6 @@
-import Grid from "@/src/components/Grid";
-import { useCharacterPage } from "@/src/providers/CharacterPageProvider";
-import Filters from "@/src/components/Filters";
+import Grid from "@/src/components/grid/Grid";
+import Filters from "@/shared/Filters";
+import useCharacterPage from "@/hooks/useCharacterPage";
 
 const CharactersPage = () => {
   const { isLoading, results } = useCharacterPage();

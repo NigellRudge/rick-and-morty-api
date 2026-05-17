@@ -21,6 +21,7 @@ export default class CacheHandler {
   }
 
   async get(key) {
+    console.log("cache called");
     return cacheMap.get(key);
   }
 }

@@ -14,7 +14,17 @@
     "jsx": "react-jsx",
     "incremental": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/http/*": ["./src/http/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/types/*": ["./src/types/*"],
+      "@/providers/*": ["./src/providers/*"],
+      "@/cards/*": ["./src/components/cards/*"],
+      "@/shared/*": ["./src/components/shared/*"],
+      "@/modals/*": ["./src/components/modals/*"],
+      "@/layout/*": ["./src/components/layout/*"],
+      "@/page-components/*": ["./src/components/page-components/*"]
     }
   },
   "include": [
