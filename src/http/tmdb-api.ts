@@ -102,6 +102,12 @@ class TMDBAPI {
       ...season,
       videos: (await this.getSeasonVideos(season.season_number))!,
       poster_path: `${this.mediaUrl}${season.poster_path}`,
+      networks: season.networks.map((network) => {
+        return {
+          ...network,
+          logo_path: `${this.mediaUrl}${network.logo_path}`,
+        };
+      }),
       episodes: season.episodes.map((episode) => ({
         ...episode,
         overview:

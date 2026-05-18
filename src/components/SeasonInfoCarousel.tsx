@@ -6,6 +6,7 @@ import ReactPlayer from "react-player";
 import { setInterval } from "node:timers";
 import useEpisodePage from "@/src/hooks/useEpisodesPage";
 import { hasItems } from "@/utils/list";
+import { Network } from "@/types/tmdb/season";
 
 const PlayButton = ({ onClick }: { onClick: () => void }) => (
   <div
@@ -165,6 +166,29 @@ const SeasonSwitcher = () => {
   );
 };
 
+const Networks = ({ networks }: { networks?: Network[] }) => {
+  if (!hasItems(networks)) return null;
+  return (
+    <div className="flex flex-row gap-2">
+      {networks!.map((network) => (
+        <div key={`${network.id}`}>
+          <div className="w-24 relative h-10">
+            <Image
+              src={network.logo_path}
+              alt={network.name + "logo"}
+              sizes="70px"
+              fill
+              loading="eager"
+              priority
+              className="object-contain"
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const SeasonInfo = () => {
   const { selectedSeason } = useEpisodePage();
   if (!selectedSeason) return null;
@@ -194,14 +218,14 @@ const SeasonInfo = () => {
             {selectedSeason.episodes.length}
           </span>
         </span>
-        <span className="text-gray-300 text-sm"></span>
       </div>
-      <div className="flex flex-col mt-6">
+
+      <Networks networks={selectedSeason.networks} />
+      <div className="flex flex-col mt-2 lg:mt-6">
         <p className="lg:text-base lg:text-start text-center text-sm text-gray-300">
           {selectedSeason.overview}
         </p>
       </div>
-
       <SeasonSwitcher />
     </div>
   );
@@ -226,7 +250,7 @@ const SeasonInfoCarousel = ({ delay = 3500 }: { delay?: number }) => {
   }, [selectedSeason]);
 
   return (
-    <div className="w-full aspect-[4/6] md:aspect-[5/6] max-h-[70vh] lg:aspect-video relative rounded-xl overflow-hidden">
+    <div className="w-full aspect-[4/6] md:aspect-[5/6] max-h-[75vh] lg:aspect-video relative rounded-xl overflow-hidden">
       <SeasonInfo />
       <VideoPlayer
         videoUrl={carouselVideoUrl}
