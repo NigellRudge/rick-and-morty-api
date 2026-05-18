@@ -13,7 +13,7 @@ const LocationFilter = () => {
     clearFilters,
   } = useCharacterPage();
   return (
-    <div className="flex flex-col gap-2 px-2 flex-1">
+    <div className="flex flex-col gap-2 flex-1 lg:max-w-[25%]">
       <h3 className="text-gray-200 text-lg">Location</h3>
       <AsyncSelect
         className="react-select-container"
@@ -43,7 +43,7 @@ const LocationFilter = () => {
 const GenderFilter = () => {
   const { updateActiveFiltersForKey } = useCharacterPage();
   return (
-    <div className="flex flex-col gap-2 flex-1 lg:max-w-[25vw]">
+    <div className="flex flex-col gap-2 flex-1 lg:max-w-[25%]">
       <h3 className="text-gray-200 text-lg">Gender</h3>
       <Select
         className="react-select-container"
@@ -68,7 +68,7 @@ const GenderFilter = () => {
 const SpeciesFilter = () => {
   const { updateActiveFiltersForKey } = useCharacterPage();
   return (
-    <div className="flex flex-col gap-2 flex-1 lg:max-w-[25vw]">
+    <div className="flex flex-col gap-2 flex-1 lg:max-w-[25%]">
       <h3 className="text-gray-200 text-lg">Species</h3>
       <Select
         className="react-select-container"
@@ -92,7 +92,7 @@ const SpeciesFilter = () => {
 
 const Filters = () => {
   return (
-    <div className="flex md:flex-row w-full flex-col gap-2">
+    <div className="flex md:flex-row w-full flex-col gap-3">
       <GenderFilter />
       <SpeciesFilter />
       <LocationFilter />

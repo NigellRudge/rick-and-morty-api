@@ -65,7 +65,7 @@ const LoadingAnimation = () => {
         alignItems: "center",
       }}
     >
-      <div style={{ width: 300 }}>
+      <div className="w-[25vw] h-[25vw]">
         <svg
           id="loading-container"
           viewBox="0 0 258 274"

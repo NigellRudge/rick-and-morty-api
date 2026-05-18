@@ -4,7 +4,13 @@ import { motion } from "framer-motion";
 import useNavigationState from "@/hooks/useNavigationState";
 import CharacterStatus from "@/shared/CharacterStatus";
 
-const CharacterCard = ({ character }: { character: Character }) => {
+const CharacterCard = ({
+  character,
+  priority = false,
+}: {
+  character: Character;
+  priority?: boolean;
+}) => {
   const { setSelectedCharacter, selectedCharacter } = useNavigationState();
   return (
     <motion.button
@@ -18,6 +24,8 @@ const CharacterCard = ({ character }: { character: Character }) => {
         <Image
           src={character.image}
           alt={character.image}
+          priority={priority}
+          loading={priority ? "eager" : "lazy"}
           fill
           sizes="(min-width: 768px) 20vw,(min-width: 1025px) 15vw, 40vw"
           className="object-cover w-full h-full transition-transform ease-in-out duration-200 group-hover:scale-[1.05]"

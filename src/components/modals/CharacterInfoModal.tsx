@@ -4,7 +4,7 @@ import Icon from "@/shared/Icon";
 import Image from "next/image";
 import CharacterStatus from "@/shared/CharacterStatus";
 
-const CharacterDetailModal = () => {
+const CharacterInfoModal = () => {
   const { selectedCharacter, setSelectedCharacter } = useNavigationState();
 
   return (
@@ -19,7 +19,7 @@ const CharacterDetailModal = () => {
             animate={{ opacity: 1 }}
           ></motion.div>
           <motion.div
-            className="fixed inset-0 m-auto md:max-w-[350px] max-w-[70vw] aspect-[4/6] z-50 rounded-xl border-gray-100 border overflow-hidden "
+            className="fixed inset-0 m-auto md:max-w-[350px] max-w-[70vw] max-h-[600px] aspect-[4/6] z-50 rounded-xl border-gray-100 border overflow-hidden "
             layoutId={`selected-${selectedCharacter!.id}`}
           >
             <button
@@ -73,4 +73,4 @@ const CharacterDetailModal = () => {
   );
 };
 
-export default CharacterDetailModal;
+export default CharacterInfoModal;

@@ -49,7 +49,13 @@ const ReleaseDate = ({ releaseDate }: { releaseDate: string }) => (
   </div>
 );
 
-const EpisodeCard = ({ episode }: { episode: TMDBEpisode }) => {
+const EpisodeCard = ({
+  episode,
+  priority = false,
+}: {
+  episode: TMDBEpisode;
+  priority?: boolean;
+}) => {
   return (
     <Link
       href={`/episodes/${getEpisodeCode(episode.season_number, episode.episode_number)}`}
@@ -59,6 +65,8 @@ const EpisodeCard = ({ episode }: { episode: TMDBEpisode }) => {
         <Image
           src={episode.still_path}
           alt={episode.still_path}
+          priority={priority}
+          loading={priority ? "eager" : "lazy"}
           fill
           sizes="(min-width: 0px) 180vw,(min-width: 1025px) 400px,(min-width: 1400px) 550px"
           className="w-full h-full object-cover"

@@ -7,15 +7,29 @@ import LoadingAnimation from "@/shared/LoadingAnimation";
 import { hasItems } from "@/utils/list";
 import { GridItemType } from "@/types/shared";
 
+const LoadMoreButton = ({ onClick }: { onClick: () => void }) => (
+  <div className="w-full flex items-center justify-center ">
+    <button
+      className="btn btn-primary rounded-xl flex items-center justify-center px-3 py-2"
+      onClick={() => onClick && onClick()}
+    >
+      Load More
+    </button>
+  </div>
+);
+
 const Grid = ({
   items,
   type = "character",
   isLoading = false,
+  loadMore = () => {},
+  canLoadMore = true,
 }: {
   items?: Character[] | Location[] | TMDBEpisode[] | null;
   type: GridItemType;
   isLoading?: boolean;
-  loadMore?: () => Promise<void>;
+  loadMore?: () => void;
+  canLoadMore?: boolean;
 }) => {
   const columnLayout =
     (type === "character" &&
@@ -27,34 +41,40 @@ const Grid = ({
     return null;
   }
 
-  if (isLoading && (!items || items?.length === 0)) {
-    return <LoadingAnimation />;
-  }
-
   return (
-    <ul
-      className={`grid ${columnLayout} overflow-y-auto no-scrollbar relative gap-3 cursor-pointer px-1 py-1 h-full`}
-    >
-      {hasItems(items) &&
-        items?.map((item) => {
-          switch (type) {
-            case "character":
-              return (
-                <li className="relative" key={item.id}>
-                  <CharacterCard character={item as Character} />
-                </li>
-              );
-            case "episode":
-              return (
-                <li className="relative" key={item.id}>
-                  <EpisodeCard episode={item as TMDBEpisode} />
-                </li>
-              );
-            default:
-              return null;
-          }
-        })}
-    </ul>
+    <>
+      <ul
+        className={`grid ${columnLayout} overflow-y-auto no-scrollbar relative gap-3 cursor-pointer h-full`}
+      >
+        {hasItems(items) &&
+          items?.map((item, index) => {
+            switch (type) {
+              case "character":
+                return (
+                  <li className="relative" key={`item-${item.id}-${index}`}>
+                    <CharacterCard
+                      priority={index <= 10}
+                      character={item as Character}
+                    />
+                  </li>
+                );
+              case "episode":
+                return (
+                  <li className="relative" key={item.id}>
+                    <EpisodeCard
+                      priority={index <= 10}
+                      episode={item as TMDBEpisode}
+                    />
+                  </li>
+                );
+              default:
+                return null;
+            }
+          })}
+      </ul>
+      {isLoading && <LoadingAnimation />}
+      {canLoadMore && <LoadMoreButton onClick={loadMore} />}
+    </>
   );
 };
 

@@ -21,7 +21,7 @@ type ContextType = {
   setSelectedLocation: (data?: Location[]) => void;
   clearFilters: () => void;
   filters: FilterType;
-  fetchMore?: (page?: number) => void;
+  loadMore?: (page?: number) => void;
   fetchLocations?: DebouncedFunc<
     (
       input: string,
@@ -32,17 +32,21 @@ type ContextType = {
     key: K,
     value: FilterType[K],
   ) => void;
+  totalResults: number;
+  canLoadMore: boolean;
 };
 
 export const CharacterPageContext = createContext<ContextType>({
   isLoading: false,
   results: [],
   filters: {},
-  fetchMore: () => {},
+  loadMore: () => {},
   clearFilters: () => {},
   setSelectedLocation: () => {},
   fetchLocations: debounce(async () => [], 200),
   updateActiveFiltersForKey: () => {},
+  totalResults: 0,
+  canLoadMore: true,
 });
 
 const CharacterPageProvider = ({ children }: { children: ReactNode }) => {
@@ -50,18 +54,17 @@ const CharacterPageProvider = ({ children }: { children: ReactNode }) => {
   const [results, setResults] = useState<Character[]>([]);
   const [filters, setFilters] = useState<FilterType>({});
   const [page, setPage] = useState<number>(1);
+  const [totalResults, setTotalResults] = useState<number>(0);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
   const name = (query?.name || "") as string;
 
   const { selectedFilters, cacheKey } = useMemo(() => {
-    const selectedFilters = { ...filters, name };
+    const mergedFilters = { ...filters, name, page };
     const cacheKey = canLoadMore
-      ? ["characters", page.toString(), JSON.stringify(selectedFilters)].join(
-          "-",
-        )
+      ? ["characters", JSON.stringify(mergedFilters)].join("-")
       : null;
-    return { selectedFilters, cacheKey };
+    return { selectedFilters: mergedFilters, cacheKey };
   }, [canLoadMore, filters, name, page]);
 
   const { isValidating: isLoading, mutate } = useSWR(cacheKey, {
@@ -80,11 +83,14 @@ const CharacterPageProvider = ({ children }: { children: ReactNode }) => {
           await rickAndMortyClient.getCharacters(selectedFilters);
 
         if (response) {
-          setCanLoadMore(Boolean(response.info.next));
+          setCanLoadMore(
+            Boolean(response.info.next) && response.info.pages > 1,
+          );
           setResults((prev) => {
             if (page === 1) return response.results;
             return [...prev, ...response.results];
           });
+          setTotalResults(response.info.count);
         }
       } catch (error) {
         console.log(error);
@@ -92,7 +98,7 @@ const CharacterPageProvider = ({ children }: { children: ReactNode }) => {
     },
   });
 
-  const fetchMore = (jumpToPage?: number) => {
+  const loadMore = (jumpToPage?: number) => {
     if (jumpToPage !== undefined) {
       setPage(jumpToPage!);
       return;
@@ -133,12 +139,16 @@ const CharacterPageProvider = ({ children }: { children: ReactNode }) => {
   const updateActiveFiltersForKey = useCallback(
     <K extends keyof FilterType>(key: K, value: FilterType[K]) => {
       if (value === undefined) return;
+      const shouldMutate = Array.isArray(value) && value.length === 0;
+      setPage(1);
       setFilters((prev) => {
         return {
           ...prev,
           [key]: value,
         };
       });
+      setCanLoadMore(true);
+      if (shouldMutate) mutate();
     },
     [setFilters],
   );
@@ -176,11 +186,13 @@ const CharacterPageProvider = ({ children }: { children: ReactNode }) => {
         isLoading: isLoading,
         results,
         filters,
-        fetchMore,
+        loadMore,
         fetchLocations: debouncedFetch,
         updateActiveFiltersForKey,
         setSelectedLocation,
         clearFilters,
+        totalResults,
+        canLoadMore,
       }}
     >
       {children}

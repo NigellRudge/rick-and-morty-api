@@ -5,6 +5,7 @@ import { Location } from "@/types/rick-and-morty-api/location";
 import { FilterType } from "@/types/filters";
 import { getCharacterIdsFromUrls } from "@/utils/list";
 import axios, { AxiosInstance } from "axios";
+import * as querystring from "node:querystring";
 
 class RickAndMortyApi {
   private readonly axiosClient: AxiosInstance;
@@ -49,12 +50,11 @@ class RickAndMortyApi {
     }
   };
 
-  private async get<T>(
-    url: string,
-    params?: Record<string, string | number | object>,
-  ): Promise<T | null> {
+  private async get<T>(url: string, params?: FilterType): Promise<T | null> {
     try {
-      const response = await this.axiosClient.get<T>(url, { params });
+      const response = await this.axiosClient.get<T>(
+        `${url}?${querystring.stringify(params)}`,
+      );
       if (response.status !== 200) {
         return null;
       }

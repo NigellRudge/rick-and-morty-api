@@ -86,7 +86,6 @@ const useSearchInput = () => {
     }
   }, [router?.query?.name, setInputValue]);
 
-  console.log("called");
   return {
     isFocused,
     showClearButton: inputValue?.length >= 3,

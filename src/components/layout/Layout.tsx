@@ -4,7 +4,7 @@ import { name } from "@/package.json";
 import SideBar from "@/layout/SideBar";
 import Header from "@/layout/Header";
 import { LayoutGroup } from "framer-motion";
-import CharacterDetailModal from "@/modals/CharacterDetailModal";
+import CharacterInfoModal from "@/modals/CharacterInfoModal";
 import Footer from "@/layout/Footer";
 
 const Layout = ({
@@ -33,7 +33,7 @@ const Layout = ({
         >
           <LayoutGroup>
             {children}
-            <CharacterDetailModal />
+            <CharacterInfoModal />
           </LayoutGroup>
         </main>
         <Footer />
